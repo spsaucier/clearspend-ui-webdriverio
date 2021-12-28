@@ -7,7 +7,7 @@ class HomePage extends Page {
     /**
      * define selectors using getter methods
      */
-    get homeHeader() { return $('//h1/span[contains(text(), "Welcome, ")]'); }
+    get homeHeader() { return $('//span[contains(text(), "Welcome, ")]'); }
 }
 
 export default new HomePage();

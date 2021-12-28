@@ -6,14 +6,15 @@ describe('Testing login functionality', () => {
         await LoginPage.open();
 
         await LoginPage.loginWith('test@clearspend.com', '123456');
-        await expect(HomePage.homeHeader).not.toBeDisplayed();
         await expect(LoginPage.errorNotification).toBeDisplayed();
+        await expect(HomePage.homeHeader).not.toBeDisplayed();
     });
 
     it('should login with valid credentials', async () => {
         await LoginPage.open();
 
         await LoginPage.login();
+        await HomePage.homeHeader.waitForDisplayed();
         await expect(HomePage.homeHeader).toBeDisplayed();
     });
 });
