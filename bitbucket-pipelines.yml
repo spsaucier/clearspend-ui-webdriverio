@@ -1,9 +1,15 @@
-image: node:latest
-
+image: circleci/node:10.14-browsers
 pipelines:
-  default:
-    - step:
-        name: Build and test - use puppeteer provided chromium
-        script:
-        - npm install
-        - npm run wdio
+  pull-requests:
+    '**':
+      - step:
+          script:
+            - npm ci
+            - npm run wdio
+
+  branches:
+    master:
+      - step:
+          script:
+            - npm ci
+            - npm run wdio
