@@ -5,7 +5,5 @@ pipelines:
     - step:
         name: Build and test
         script:
-          - echo $EMAIL
-          - echo $PASS
           - npm install
           - npm run wdio
