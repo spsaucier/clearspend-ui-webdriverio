@@ -1,45 +1,105 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+## Installation
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+This project is tested on **Node v16** and above.  While earlier versions of node may be compatible, but they have not been verified.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+`Node.JS:` Install  from the site - https://nodejs.org/en/  take the LTS version based on your Operating system. Please make sure you install NodeJS globally.
 
----
+`JDK 1.8:` It is optional, install JDK 1.8+ and make sure class path is set properly. JAVA is require to start `Selenium Server` on your local environment nothing else.
 
-## Edit a file
+## Run Some Sample Tests
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+To execute the entire test suite in local development, you can use any one of the options mentioned below
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+Option 1: `npm run wdio`. Executes all features in the [`./test/specs/*.js`] directory.
 
----
+Option 2: `npm wun wdio TestSuiteName`. Executes features related to TestSuite specified. - !Still needs to be configured!
 
-## Create a file
+## Config Files
 
-Next, you’ll add a new file to this repository.
+WebdriverIO uses configuration files to setup and execute tests in specific ways.  The configuration is fully customizable, and different functions can be invoked before, during and after each test or test suite.  Config files can be found in the `/test/config/` directory and all end with `*.conf.js`.  These can be called via the the cli.
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+## Logs  
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+Level of logging verbosity: trace | debug | info | warn | error | silent. Can be configured in wdio.conf.js file.
 
----
+## Reporters
 
-## Clone a repository
+WebdriverIO uses several different types of test reporters to communicate pass/failure.  
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+* Dot
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+To use the dot reporter just add 'dot' to the reporters array in the config file. The dot reporter prints for each test spec a dot. If colors are enabled on your machine you will see three different colors for dots. Yellow dots mean that at least one browser has executed that spec. A green dot means all browser passed that spec and a red to means that at least one browser failed that spec. All config files have this turned on by default.
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+* Spec
+
+Test reporter, that prints detailed results to console.
+
+* Allure
+
+The Allure Reporter creates [Allure](http://allure.qatools.ru/) test reports which is an HTML generated website with all necessary information to debug your test results and take a look on error screenshots. Add allure to the reporters array in config file and define the output directory of the allure reports.
+
+Allure has several other reporting tools optimized for the CI server of your choice.  You can [view the documentation here](http://wiki.qatools.ru/display/AL/Reporting).
+
+* junit/xunit
+
+The JUnit reporter helps you to create xml reports for your CI server. Add it to the reports array in the config file and define the directory where the xml files should get stored. webdriverIO will create an xml file for each instance under test and the filename will contain the browser and OS.
+
+To generate and view an junit/xunit report locally, run `npm run junit-report`. A typical junit/xunit report will look like this
+
+* JSON
+
+The JSON reporter is especially versatile. Since it produces a literal in a key : value pair, help to read, translate execution results to any custom reporter / it can be used to transport reporter events to another process and format them there, or to store the execution results back to any standard RDBMS or to NoSQL like mongodb with very minimal effort.
+
+## Develop automation scripts
+
+You can write test by using Jasmine framework. You can choose javascript based design pattern or ES6-8 based. This project is ES6-8 friendly (via Babel)
+WebdriverIO Docs - https://webdriver.io/docs/api
+
+## The Page Object Design Pattern
+
+Within your web app's UI there are areas that your tests interact with. A Page Object simply models these as objects within the test code. This reduces the amount of duplicated code and means that if the UI changes, the fix need only be applied in one place. In other words one of the challenges of writing test automation is keeping your [selectors] (classes, id's, or xpath' etc.) up to date with the latest version of your code.  The next challenge is to keep the code you write nice and DRY (Don't Repeat Yourself).  The page object pattern helps us accomplish this in one solution.  Instead of including our selectors in our tests, we instead place them in a `<pagename>.js` file where we can manage all these selectors and methods together. Your test file should only call the test methods.
+
+You can also place reusable functions or logic inside of these pages and call them from your step files. The page object serves as a layer of abstraction between tests and code.  When a test fails, it fails on a individual step.  That step may call a selector that is no longer valid, but that selector may be used by many other steps.  By having a single source of truth of what the selector is supposed to be, fixing one selector on the page object could repair a number of failing tests that were affected by the same selector.
+
+
+```
+	class LoginPage extends Page {
+		/**
+		 * define selectors using getter methods
+		 */
+		get inputEmail() { return $('//input[@type="email"]'); }
+
+		get inputPassword() { return $('//input[@name="password"]'); }
+
+		get buttonLogin() { return $('//button[@type="submit"]'); }
+
+		get errorNotification() { return $('//h3[text()="Something went wrong"]'); }
+
+		/**
+		 * Page Methods
+		 */
+
+		async login () {
+			await this.inputEmail.setValue(process.env.EMAIL);
+			await this.inputPassword.setValue(process.env.PASS);
+			await this.buttonLogin.click();
+		}
+
+		async loginWith (email, password) {
+			await this.inputEmail.setValue(email);
+			await this.inputPassword.setValue(password);
+			await this.buttonLogin.click();
+		}
+		
+		/*
+		 * overwrite specific options to adapt it to page object
+		 */
+
+		open() {
+			return super.open('login');
+		}
+	}
+
+	export default new LoginPage();
+
+```
