@@ -5,7 +5,7 @@ describe('Testing login functionality', () => {
     it('should not login with invalid credentials', async () => {
         await LoginPage.open();
 
-        await LoginPage.loginWith('test@clearspend.com', '123456');
+        await LoginPage.loginWith('test@clearspend.com', '1234567');
         await expect(LoginPage.errorNotification).toBeDisplayed();
         await expect(HomePage.homeHeader).not.toBeDisplayed();
     });
