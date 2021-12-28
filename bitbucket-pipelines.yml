@@ -6,4 +6,4 @@ pipelines:
         name: Build and test - use puppeteer provided chromium
         script:
         - npm install
-        - node example.js
+        - npm run wdio
