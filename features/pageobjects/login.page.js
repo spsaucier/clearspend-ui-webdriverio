@@ -1,7 +1,6 @@
 import Page from './page';
 import dotenv from 'dotenv';
 dotenv.config();
-
 /**
  * sub page containing specific selectors and methods for a specific page
  */
@@ -10,7 +9,7 @@ class LoginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get inputEmail() { return $('//input[@type="email"]'); }
+    get inputEmail() { return $('//input[@name="login"]'); }
 
     get inputPassword() { return $('//input[@name="password"]'); }
 
@@ -23,11 +22,11 @@ class LoginPage extends Page {
      * e.g. to login using username and password
      */
 
-    async login () {
-        await this.inputEmail.setValue(process.env.EMAIL);
-        await this.inputPassword.setValue(process.env.PASS);
-        await this.buttonLogin.click();
-    }
+    // async login (email, password) {
+    //     await this.inputEmail.setValue(email);
+    //     await this.inputPassword.setValue(password);
+    //     await this.buttonLogin.click();
+    // }
 
     async loginWith (email, password) {
         await this.inputEmail.setValue(email);
