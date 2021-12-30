@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@wdio/cucumber-framework';
+import { Given } from '@wdio/cucumber-framework';
 import LoginPage from '../pageobjects/login.page';
 
 const pages = {
@@ -15,7 +15,7 @@ Given('I sign in to the application', async () => {
     await LoginPage.login();
 });
 
-// Login with the user specified in feature file - Accounts for Testing
+// Login with the user specified in feature file
 Given('I sign in to the application with {string}', async (email) => {
     await LoginPage.loginWith(email);
 });

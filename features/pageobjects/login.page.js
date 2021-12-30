@@ -22,17 +22,19 @@ class LoginPage extends Page {
      * e.g. to login using username and password
      */
 
-    // async login (email, password) {
-    //     await this.inputEmail.setValue(email);
-    //     await this.inputPassword.setValue(password);
-    //     await this.buttonLogin.click();
-    // }
-
-    async loginWith (email, password) {
+    async login (email=process.env.EMAIL, password=process.env.PASS) {
         await this.inputEmail.setValue(email);
         await this.inputPassword.setValue(password);
         await this.buttonLogin.click();
     }
+
+    async loginWith (email, password=process.env.TEST_PASS) {
+        await this.inputEmail.setValue(email);
+        await this.inputPassword.setValue(password);
+        await this.buttonLogin.click();
+        await browser.pause(3000);
+    }
+
     /*
      * overwrite specific options to adapt it to page object
      */
