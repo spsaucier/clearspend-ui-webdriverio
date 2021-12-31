@@ -52,8 +52,6 @@ export const config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    user: process.env.SAUCE_USERNAME,
-    key: process.env.SAUCE_ACCESS_KEY,
     capabilities: [{
     
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
@@ -61,19 +59,12 @@ export const config = {
         // 5 instances get started at a time.
         maxInstances: 5,
         //
-        platformName: 'iOS',
-        browserName: 'Safari',
-        'appium:deviceName': 'iPad Simulator',
-        'appium:platformVersion': '15.0',
+        browserName: 'chrome',
+        browserVersion: 'latest',
+        platformName: 'Windows 10',
         'sauce:options': {
-          appiumVersion: '1.22.0',
+          screenResolution: '1600x1200',
         },
-        // browserName: 'chrome',
-        // browserVersion: 'latest',
-        // platformName: 'macOS 12',
-        // 'sauce:options': {
-        //   screenResolution: '1600x1200',
-        // },
         // 'goog:chromeOptions': {
         //     headless: true
         // },
@@ -115,6 +106,8 @@ export const config = {
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
     baseUrl: 'https://capital.dev.clearspend.com/',
+    user: process.env.SAUCE_USERNAME,
+    key: process.env.SAUCE_ACCESS_KEY,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,

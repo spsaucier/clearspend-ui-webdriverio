@@ -17,7 +17,8 @@
     },
     "scripts": {
         "wdio": "wdio run config/wdio.conf.js",
-        "wdio:sauce": "wdio run config/wdio.sauce.js"
+        "wdio:sauce:web": "wdio run config/wdio.sauce.web.js",
+        "wdio:sauce:mobile": "wdio run config/wdio.sauce.mobile.js"
     },
     "dependencies": {
         "@wdio/logger": "^7.16.0",
