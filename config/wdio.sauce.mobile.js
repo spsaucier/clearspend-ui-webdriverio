@@ -107,8 +107,6 @@ export const config = {
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
     baseUrl: 'https://capital.dev.clearspend.com/',
-    user: process.env.SAUCE_USERNAME,
-    key: process.env.SAUCE_ACCESS_KEY,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -125,6 +123,8 @@ export const config = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     services: ['sauce'],
+    user: process.env.SAUCE_USERNAME,
+    key: process.env.SAUCE_ACCESS_KEY,
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
