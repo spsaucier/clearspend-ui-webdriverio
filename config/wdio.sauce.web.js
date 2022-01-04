@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const config = {
     //
     // ====================
@@ -57,9 +60,14 @@ export const config = {
         maxInstances: 5,
         //
         browserName: 'chrome',
-        'goog:chromeOptions': {
-            headless: true
+        browserVersion: 'latest',
+        platformName: 'Windows 10',
+        'sauce:options': {
+          screenResolution: '1600x1200',
         },
+        // 'goog:chromeOptions': {
+        //     headless: true
+        // },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -73,7 +81,7 @@ export const config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'debug',
     //
     // Set specific log levels per logger
     // loggers:
@@ -98,6 +106,8 @@ export const config = {
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
     baseUrl: 'https://capital.dev.clearspend.com/',
+    user: process.env.SAUCE_USERNAME,
+    key: process.env.SAUCE_ACCESS_KEY,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -113,7 +123,7 @@ export const config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['devtools'],
+    services: ['sauce'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
