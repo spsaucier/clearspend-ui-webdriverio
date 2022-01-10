@@ -16,7 +16,7 @@
         "wdio-chromedriver-service": "^7.2.2"
     },
     "scripts": {
-        "wdio": "wdio run config/wdio.conf.js",
+        "wdio:local": "wdio run config/wdio.conf.js",
         "wdio:sauce:web": "wdio run config/wdio.sauce.web.js",
         "wdio:sauce:mobile": "wdio run config/wdio.sauce.mobile.js"
     },

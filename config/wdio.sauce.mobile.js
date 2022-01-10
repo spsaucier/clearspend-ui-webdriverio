@@ -61,7 +61,7 @@ export const config = {
         //
         platformName: 'iOS',
         browserName: 'Safari',
-        'appium:deviceName': 'iPad Simulator',
+        'appium:deviceName': 'iPhone 13 Simulator',
         'appium:platformVersion': '15.0',
         'sauce:options': {
           appiumVersion: '1.22.0',
