@@ -61,7 +61,7 @@ export const config = {
         //
         browserName: 'chrome',
         browserVersion: 'latest',
-        platformName: 'Windows 10',
+        platformName: 'Windows 11',
         'sauce:options': {
           screenResolution: '1600x1200',
         },
@@ -152,9 +152,9 @@ export const config = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./features/step-definitions/given.js',
-                  './features/step-definitions/when.js',
-                  './features/step-definitions/then.js',
+        require: ['./step-definitions/given.js',
+                  './step-definitions/when.js',
+                  './step-definitions/then.js',
                  ],
         // <boolean> show full backtrace for errors
         backtrace: false,
