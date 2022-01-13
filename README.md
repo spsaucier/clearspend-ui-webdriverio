@@ -4,23 +4,22 @@ This project is tested on **Node v16** and above.  While earlier versions of nod
 
 `Node.JS:` Install  from the site - https://nodejs.org/en/  take the LTS version based on your Operating system. Please make sure you install NodeJS globally.
 
-`JDK 1.8:` It is optional, install JDK 1.8+ and make sure class path is set properly. JAVA is require to start `Selenium Server` on your local environment nothing else.
-
 ## Run Some Sample Tests
 
 To execute the entire test suite in local development, you can use any one of the options mentioned below
 
-Option 1: `npm run wdio`. Executes all features in the [`./test/specs/*.js`] directory.
+Option 1: `npm run wdio`. Executes all features in the [`./features/*.feature`] directory.
 
-Option 2: `npm wun wdio TestSuiteName`. Executes features related to TestSuite specified. - !Still needs to be configured!
+Option 2: `npm wun wdio TestSuiteName`. Executes features related to TestSuite specified. - TO DO: Can only be done when we have multiple test suites.
 
 ## Config Files
 
-WebdriverIO uses configuration files to setup and execute tests in specific ways.  The configuration is fully customizable, and different functions can be invoked before, during and after each test or test suite.  Config files can be found in the `/test/config/` directory and all end with `*.conf.js`.  These can be called via the the cli.
+WebdriverIO uses configuration files to setup and execute tests in specific ways.  The configuration is fully customizable, and different functions can be invoked before, during and after each test or test suite.  Config files can be found in the `/config/` directory and all end with `*.conf.js`.
+Currently have 3 separate configs - for local, sauce labs web and sauce labs mobile.
 
 ## Logs  
 
-Level of logging verbosity: trace | debug | info | warn | error | silent. Can be configured in wdio.conf.js file.
+Level of logging verbosity: trace | debug | info | warn | error | silent. Can be configured in config file.
 
 ## Reporters
 
