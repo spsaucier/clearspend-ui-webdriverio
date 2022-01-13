@@ -24,7 +24,7 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './features/**/login.feature'
+        './features/**/new.card.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -64,6 +64,8 @@ export const config = {
         platformName: 'Windows 11',
         'sauce:options': {
           screenResolution: '1600x1200',
+          extendedDebugging: true,
+          capturePerformance: true
         },
         // 'goog:chromeOptions': {
         //     headless: true
