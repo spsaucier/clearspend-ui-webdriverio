@@ -7,4 +7,3 @@ pipelines:
         script:
           - npm install
           - npm run wdio:sauce:web
-          - npm run wdio:sauce:mobile
