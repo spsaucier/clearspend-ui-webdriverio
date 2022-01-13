@@ -1,21 +1,28 @@
 import { Given } from '@wdio/cucumber-framework';
 import LoginPage from '../pageobjects/login.page';
-import log from 'loglevel';
+import DashboardPage from '../pageobjects/dashboard.page';
+import CardsPage from '../pageobjects/cards.page';
 
 const pages = {
-    login: LoginPage
+    login: LoginPage,
+    cards: CardsPage
 };
 
 // Navigate to specific page, for example Login Page, Sign Up Page etc.
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open(); 
-    await log.info(`Page ${page} is opened.`);
+
+});
+
+// TO DO: Write steps for creating a new account and going though KYC/KYB.
+Given('I register an account', async () => {
 
 });
 
 // Login with the user specified in .env file.
 Given('I sign in to the application', async () => {
     await LoginPage.login();
+    await expect(DashboardPage.headerHome).toBeDisplayedInViewport();
 });
 
 // Login with the user specified in feature file
