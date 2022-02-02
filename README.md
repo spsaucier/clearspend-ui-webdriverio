@@ -8,14 +8,17 @@ This project is tested on **Node v16** and above.  While earlier versions of nod
 
 To execute the entire test suite in local development, you can use any one of the options mentioned below
 
-Option 1: `npm run wdio`. Executes all features in the [`./features/*.feature`] directory.
+Option 1: `npm run wdio:local`. Executes all features in the [`./features/*.feature`] directory, executes features locally, on your own machine. (For debugging purposes)
 
-Option 2: `npm wun wdio TestSuiteName`. Executes features related to TestSuite specified. - TO DO: Can only be done when we have multiple test suites.
+Option 2: `npm run wdio:sauce:web`. Executes all features in Sauce Labs for Web (Chrome, Firefox, Safari).
 
-## Config Files
+Option 3: `npm run wdio:sauce:mobile`. Executes all features in Sauce Labs using Mobile Browsers (iOS Safari, Chrome Android).
 
-WebdriverIO uses configuration files to setup and execute tests in specific ways.  The configuration is fully customizable, and different functions can be invoked before, during and after each test or test suite.  Config files can be found in the `/config/` directory and all end with `*.conf.js`.
-Currently have 3 separate configs - for local, sauce labs web and sauce labs mobile.
+## Config Files - config/wdio.conf.js, config/wdio.sauce.mobile.js, config/wdio.sauce.web.js.
+
+config/wdio.conf.js - Configuration file for web to execute features locally. (Debugging)
+config/wdio.sauce.mobile.js - Configuration file for mobile browsers, features executed in Sauce Labs.
+config/wdio.sauce.web.js - Configuration file for desktop browsers, features executed in Sauce Labs.
 
 ## Logs  
 
@@ -25,25 +28,9 @@ Level of logging verbosity: trace | debug | info | warn | error | silent. Can be
 
 WebdriverIO uses several different types of test reporters to communicate pass/failure.  
 
-* Dot
-
-To use the dot reporter just add 'dot' to the reporters array in the config file. The dot reporter prints for each test spec a dot. If colors are enabled on your machine you will see three different colors for dots. Yellow dots mean that at least one browser has executed that spec. A green dot means all browser passed that spec and a red to means that at least one browser failed that spec. All config files have this turned on by default.
-
 * Spec
 
 Test reporter, that prints detailed results to console.
-
-* Allure
-
-The Allure Reporter creates [Allure](http://allure.qatools.ru/) test reports which is an HTML generated website with all necessary information to debug your test results and take a look on error screenshots. Add allure to the reporters array in config file and define the output directory of the allure reports.
-
-Allure has several other reporting tools optimized for the CI server of your choice.  You can [view the documentation here](http://wiki.qatools.ru/display/AL/Reporting).
-
-* junit/xunit
-
-The JUnit reporter helps you to create xml reports for your CI server. Add it to the reports array in the config file and define the directory where the xml files should get stored. webdriverIO will create an xml file for each instance under test and the filename will contain the browser and OS.
-
-To generate and view an junit/xunit report locally, run `npm run junit-report`. A typical junit/xunit report will look like this
 
 * JSON
 
@@ -51,7 +38,7 @@ The JSON reporter is especially versatile. Since it produces a literal in a key 
 
 ## Develop automation scripts
 
-You can write test by using Jasmine framework. You can choose javascript based design pattern or ES6-8 based. This project is ES6-8 friendly (via Babel)
+You can write test by using Cucumber framework. You can choose javascript based design pattern or ES6-8 based. This project is ES6-8 friendly (via Babel)
 WebdriverIO Docs - https://webdriver.io/docs/api
 
 ## The Page Object Design Pattern
