@@ -41,7 +41,7 @@ class CardsPage extends Page {
         await NewCardPage.createCardButton.click();
 
         // Card is created and validate notification
-        await expect(NewCardPage.successNotification).toBeDisplayed();
+        await expect(super.successNotification).toBeDisplayed();
 
         // TO DO: Validate that the new card is displayed in the table
         await expect(this.cardsCounter).toBeDisplayed();

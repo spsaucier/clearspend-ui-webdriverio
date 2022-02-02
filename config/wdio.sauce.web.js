@@ -64,8 +64,8 @@ export const config = {
         platformName: 'Windows 11',
         'sauce:options': {
           screenResolution: '1600x1200',
-          extendedDebugging: true,
-          capturePerformance: true
+        //   extendedDebugging: true,
+        //   capturePerformance: true
         },
         // 'goog:chromeOptions': {
         //     headless: true
