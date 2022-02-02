@@ -12,7 +12,6 @@ class NewCardPage extends Page {
     get deliveryAddressCheckbox() { return $('(//label//span[text()="Business"])[1]'); }
     get showEmployeeNameCheckbox() { return $('//input[@name="name-on-card"]/following-sibling::span'); }
     get createCardButton() { return $('//button//span[text()="Create Card"]'); }
-    get successNotification() { return $('//div/h3[text()="Success"]'); }
 
     open() {
         return super.open('cards/edit');
