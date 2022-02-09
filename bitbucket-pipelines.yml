@@ -2,9 +2,9 @@ image: node
    
 pipelines:
   custom:
-    execute-autotest:
+    execute-autotests:
     - step:
         name: Execute Automation Tests
         script:
           - npm install
-          - npm run wdio:sauce:web
+          - npm run wdio:local
