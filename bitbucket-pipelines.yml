@@ -1,10 +1,10 @@
-image: node
+image: webdriverio/selenium-standalone
    
 pipelines:
   custom:
     execute-autotests:
     - step:
-        name: Execute Automation Tests
+        name: Test Execution
         script:
           - npm install
           - npm run wdio:local
