@@ -21,7 +21,9 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './features/**/new.card.feature'
+        './features/**/login.feature',
+        './features/**/new.card.feature',
+        './features/**/new.allocation.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -57,9 +59,9 @@ export const config = {
         maxInstances: 5,
         //
         browserName: 'chrome',
-        // 'goog:chromeOptions': {
-        //     headless: false
-        // },
+         'goog:chromeOptions': {
+             headless: false
+         },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
