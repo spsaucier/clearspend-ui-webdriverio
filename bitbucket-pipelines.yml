@@ -1,9 +1,10 @@
 image: node
    
 pipelines:
-  default:
+  custom:
+    execute-autotest:
     - step:
-        name: Build and test
+        name: Execute Automation Tests
         script:
           - npm install
           - npm run wdio:sauce:web
