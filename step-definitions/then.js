@@ -1,6 +1,7 @@
 import { Then } from '@wdio/cucumber-framework';
 import DashboardPage from '../pageobjects/dashboard.page';
 import CardsPage from '../pageobjects/cards.page';
+import AllocationsPage from '../pageobjects/allocations.page';
 
 
 // TODO:
@@ -11,7 +12,8 @@ Then(/^I expect to see the dashboard page$/, async () => {
 
 // TODO:
 Then(/^I expect to see the allocations page$/, async () => {
-
+    await AllocationsPage.buttonNewAllocation.waitForDisplayed();
+    await expect(AllocationsPage.buttonNewAllocation).toBeDisplayed();
 });
 
 // TODO:

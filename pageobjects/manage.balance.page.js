@@ -11,6 +11,7 @@ class ManageBalancePage extends Page {
     get buttonRemoveBalance() { return $('//button/span[text()="Remove Balance"]'); }
     get inputEnterAmount() { return $('//input[@placeholder="0"]'); }
     get radioButtonSource() { return $$('//label/input'); }
+    get buttonUpdateBalance() { return $('//button//span[text()="Update Balance"]'); }
 
 }
 

@@ -21,7 +21,10 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './features/**/new.card.feature'
+        './features/**/login.feature',
+        './features/**/new.card.feature',
+        './features/**/new.allocation.feature',
+        './features/**/new.employee.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -57,9 +60,9 @@ export const config = {
         maxInstances: 5,
         //
         browserName: 'chrome',
-        // 'goog:chromeOptions': {
-        //     headless: false
-        // },
+         'goog:chromeOptions': {
+             headless: true
+         },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -97,7 +100,7 @@ export const config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://capital.dev.clearspend.com/',
+    baseUrl: 'https://capital.qa.clearspend.com/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -135,9 +138,13 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
-
-
+    reporters: ['dot', [ 'junit', {
+        outputDir: './',
+        outputFileFormat: function (options) {
+            return `results-${options.cid}.xml`;
+        }
+    }]
+],
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -298,6 +305,27 @@ export const config = {
      */
     // after: function (result, capabilities, specs) {
     // },
+    /**
+     * Gets executed once before all workers get launched.
+     */
+    //onPrepare: () => {
+        // Remove the `.tmp/` folder that holds the json and report files
+    //    removeSync('.tmp/');
+    //},
+    /**
+     * Gets executed after all workers got shut down and the process is about to exit.
+     */
+    //onComplete: () => {
+        // Generate the report when it all tests are done
+        // generate({
+        // Required
+        // This part needs to be the same path where you store the JSON files
+        // default = '.tmp/json/'
+        // jsonDir: '.tmp/json/',
+        // reportPath: '.tmp/report/',
+        // for more options see https://github.com/wswebcreation/multiple-cucumber-html-reporter#options
+        // });
+    //}
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {Object} config wdio configuration object
