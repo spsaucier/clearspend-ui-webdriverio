@@ -7,6 +7,7 @@ class CardsPage extends Page {
     get cardsHeader() { return $('//h1/span[text()="Cards"]'); }
     get addNewCardButton() { return $('//button//span[text()="New Card"]'); }
     get cardsCounter() { return $$('//tbody/tr'); }
+    get successNotification() { return $('//div[text()="Changes successfully saved."]'); }
 
     async addNewCard(type) {
 
@@ -41,7 +42,7 @@ class CardsPage extends Page {
         await NewCardPage.createCardButton.click();
 
         // Card is created and validate notification
-        await expect(super.successNotification).toBeDisplayed();
+        await expect(this.successNotification).toBeDisplayed();
 
         // TO DO: Validate that the new card is displayed in the table
         await expect(this.cardsCounter).toBeDisplayed();
