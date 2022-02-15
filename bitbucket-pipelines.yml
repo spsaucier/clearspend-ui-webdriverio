@@ -1,1 +1,10 @@
-image:
+image: node
+   
+pipelines:
+  custom:
+    execute-autotests:
+    - step:
+        name: Test Execution
+        script:
+          - npm install
+          - npm run wdio:sauce:web

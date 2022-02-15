@@ -1,5 +1,3 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -26,20 +24,12 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/login.feature',
-        './features/**/new.card.feature'
+        './features/**/*.feature'
     ],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
     ],
-    // Test Suites
-    suites: {
-        demo: [
-            './features/login.feature',
-            './features/new.card.feature'
-        ],
-    },
     //
     // ============
     // Capabilities
@@ -71,24 +61,24 @@ exports.config = {
           screenResolution: '1920x1200',
         },
     },
-    {
-        maxInstances: 1,
-        browserName: 'firefox',
-        browserVersion: '96',
-        platformName: 'Windows 11',
-        'sauce:options': {
-          screenResolution: '1920x1200',
-        },
-    },
-    {
-        maxInstances: 1,
-        browserName: 'safari',
-        browserVersion: '15',
-        platformName: 'macOS 12',
-        'sauce:options': {
-            screenResolution: '1920x1440'
-        }
-    }
+    // {
+    //     maxInstances: 1,
+    //     browserName: 'firefox',
+    //     browserVersion: '96',
+    //     platformName: 'Windows 11',
+    //     'sauce:options': {
+    //       screenResolution: '1920x1200',
+    //     },
+    // },
+    // {
+    //     maxInstances: 1,
+    //     browserName: 'safari',
+    //     browserVersion: '15',
+    //     platformName: 'macOS 12',
+    //     'sauce:options': {
+    //         screenResolution: '1920x1440'
+    //     }
+    // }
 ],
     //
     // ===================
@@ -121,7 +111,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://capital.dev.clearspend.com/',
+    baseUrl: 'https://capital.qa.clearspend.com/',
     user: process.env.SAUCE_USERNAME,
     key: process.env.SAUCE_ACCESS_KEY,
     //

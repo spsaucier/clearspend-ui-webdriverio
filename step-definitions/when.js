@@ -16,6 +16,7 @@ When(/^I create new allocation$/, async () => {
     await expect(AllocationsPage.successNotification).toBeExisting();
 });
 
+// TO DO
 When(/^I add balance to root allocation$/, async () => {
     await NewAllocationPage.createAllocation();
 });
