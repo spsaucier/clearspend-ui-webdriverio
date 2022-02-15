@@ -26,20 +26,12 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/login.feature',
-        './features/**/new.card.feature'
+        './features/**/*.feature'
     ],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
     ],
-    // Test Suites
-    suites: {
-        demo: [
-            './features/login.feature',
-            './features/new.card.feature'
-        ],
-    },
     //
     // ============
     // Capabilities
