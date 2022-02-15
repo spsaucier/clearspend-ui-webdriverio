@@ -1,4 +1,4 @@
-Feature: Ad-hoc execution for CAP-373
+Feature: Login Functionality
 		
   Scenario: As a user, I should be able to login with correct credentials.
 		
