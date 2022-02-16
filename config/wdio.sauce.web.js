@@ -61,24 +61,24 @@ exports.config = {
           screenResolution: '1920x1200',
         },
     },
-    // {
-    //     maxInstances: 1,
-    //     browserName: 'firefox',
-    //     browserVersion: '96',
-    //     platformName: 'Windows 11',
-    //     'sauce:options': {
-    //       screenResolution: '1920x1200',
-    //     },
-    // },
-    // {
-    //     maxInstances: 1,
-    //     browserName: 'safari',
-    //     browserVersion: '15',
-    //     platformName: 'macOS 12',
-    //     'sauce:options': {
-    //         screenResolution: '1920x1440'
-    //     }
-    // }
+    {
+        maxInstances: 1,
+        browserName: 'firefox',
+        browserVersion: '96',
+        platformName: 'Windows 11',
+        'sauce:options': {
+          screenResolution: '1920x1200',
+        },
+    },
+    {
+        maxInstances: 1,
+        browserName: 'safari',
+        browserVersion: '15',
+        platformName: 'macOS 12',
+        'sauce:options': {
+            screenResolution: '1920x1440'
+        }
+    }
 ],
     //
     // ===================
