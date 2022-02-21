@@ -58,7 +58,7 @@ exports.config = {
         browserVersion: 'latest',
         platformName: 'Windows 11',
         'sauce:options': {
-          screenResolution: '1920x1440',
+          screenResolution: '1920x1200',
         },
     },
     {
