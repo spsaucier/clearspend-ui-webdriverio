@@ -12,6 +12,17 @@ class DashboardPage extends Page {
     get buttonAddNew() { return $('#add-new-button'); }
     get addNewOptions() { return $$('div[id=add-new-dropdown] li'); }
 
+    get buttonAllocation() {return $('//a/span[contains (text(), "Allocations")]'); }
+    get buttonCard() {return $('//a/span[contains (text(), "Card")]'); }
+    get buttonAccounting() {return $('//a/span[contains (text(), "Accounting")]'); }
+    get buttonEmployees() {return $('//a/span[contains (text(), "Employees")]'); }
+    get buttonCompanySettings() {return $('//a/span[contains (text(), "Company Settings")]'); }
+    get buttonAccountSettings() {return $('//a/span[contains (text(), "Account Settings")]'); }
+    get buttonMoreFilters() {return $(''); }
+    get inputBoxSearchTransaction() {return $(''); }
+    
+
+
 }
 
 export default new DashboardPage();
