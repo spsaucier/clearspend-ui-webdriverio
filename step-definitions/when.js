@@ -31,3 +31,17 @@ When(/^I add new (virtual|physical) card(?: with the categories "([^"]*)")?(?: w
 When(/^I pause execution for (\d+) seconds$/, async (seconds) => {
     await browser.pause(seconds * 1000);
 });
+
+When(/^I navigate and click on Allocation button$/, async()=>{
+    await DashboardPage.buttonAllocation.click();
+
+});
+
+When (/^I navigate and click on Card button$/, async() => {
+    await DashboardPage.buttonCard.click();
+});
+
+When (/^I navigate and click on Accoounting button$/, async() => {
+    await DashboardPage.buttonAccounting.click();
+});
+
