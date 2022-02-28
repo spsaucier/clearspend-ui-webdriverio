@@ -6,6 +6,7 @@ import NewAllocationPage from '../pageobjects/new.allocation.page';
 import EmployeesPage from '../pageobjects/employees.page';
 import NewEmployeePage from '../pageobjects/new.employee.page';
 
+
 When(/^I create new allocation$/, async () => {
     await NewAllocationPage.createAllocation();
     await expect(AllocationsPage.successNotification).toBeExisting();
@@ -44,4 +45,14 @@ When (/^I navigate and click on Card button$/, async() => {
 When (/^I navigate and click on Accoounting button$/, async() => {
     await DashboardPage.buttonAccounting.click();
 });
+
+When (/^I navigate and click on companySettings button$/, async() =>  {
+    await DashboardPage.buttonCompanySettings.click();
+});
+
+When (/^I navigate and click on accountSettings button$/, async() => {
+    await DashboardPage.buttonAccountSettings.click();
+});
+
+
 
