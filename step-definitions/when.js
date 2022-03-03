@@ -1,5 +1,4 @@
 import { When } from '@wdio/cucumber-framework';
-import DashboardPage from '../pageobjects/dashboard.page';
 import NewCardPage from '../pageobjects/new.card.page';
 import AllocationsPage from '../pageobjects/allocations.page';
 import NewAllocationPage from '../pageobjects/new.allocation.page';
@@ -11,7 +10,6 @@ When(/^I create new allocation$/, async () => {
     await expect(AllocationsPage.successNotification).toBeExisting();
 });
 
-// TO DO
 When(/^I add balance to root allocation$/, async () => {
     await NewAllocationPage.createAllocation();
 });
