@@ -22,6 +22,11 @@ class HomePageTest extends Page {
     // business structure of Company legal entity
 
     get dropdownOption() {return $('//div/input[@name="business-structure"]'); }
+    /**
+      add more elements for Company legal entity and radio buttons
+     */
+
+
     get radioNonProfitOrg() {return $('//label/span[contains(text(),"Nonprofit organization")]'); }
 
     // signUp > "Where should we send a text to verify your mobile phone number? " page
