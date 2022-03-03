@@ -20,11 +20,13 @@ export const config = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
-    specs: [
-        './features/**/login.feature',
-        './features/**/new.card.feature',
-        './features/**/new.allocation.feature',
-        './features/**/new.employee.feature'
+    specs: [ /** 
+        './features/login.feature',
+        './features/new.card.feature',
+        './features/new.allocation.feature',
+        './features/new.employee.feature',
+        */
+        './features/dashboard.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -57,11 +59,11 @@ export const config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        maxInstances: 1,
         //
         browserName: 'chrome',
          'goog:chromeOptions': {
-             headless: true
+             headless: false
          },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
@@ -100,7 +102,7 @@ export const config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://capital.qa.clearspend.com/',
+    baseUrl: 'https://capital.dev.clearspend.com/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,

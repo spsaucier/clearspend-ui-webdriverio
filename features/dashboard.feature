@@ -1,6 +1,6 @@
 Feature: Dashboard elements functionalities
-		
-  Scenario: As a user, I should be able to have access to filter trancestions
+
+  # Scenario: As a user, I should be able to have access to filter trancestions
 		
 	Given I am on the login page
 		And I sign in to the application

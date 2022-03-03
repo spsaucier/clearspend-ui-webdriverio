@@ -6,6 +6,7 @@ import NewAllocationPage from '../pageobjects/new.allocation.page';
 import EmployeesPage from '../pageobjects/employees.page';
 import NewEmployeePage from '../pageobjects/new.employee.page';
 
+
 When(/^I create new allocation$/, async () => {
     await NewAllocationPage.createAllocation();
     await expect(AllocationsPage.successNotification).toBeExisting();
@@ -31,3 +32,27 @@ When(/^I add new (virtual|physical) card(?: with the categories "([^"]*)")?(?: w
 When(/^I pause execution for (\d+) seconds$/, async (seconds) => {
     await browser.pause(seconds * 1000);
 });
+
+When(/^I navigate and click on Allocation button$/, async()=>{
+    await DashboardPage.buttonAllocation.click();
+
+});
+
+When (/^I navigate and click on Card button$/, async() => {
+    await DashboardPage.buttonCard.click();
+});
+
+When (/^I navigate and click on Accoounting button$/, async() => {
+    await DashboardPage.buttonAccounting.click();
+});
+
+When (/^I navigate and click on companySettings button$/, async() =>  {
+    await DashboardPage.buttonCompanySettings.click();
+});
+
+When (/^I navigate and click on accountSettings button$/, async() => {
+    await DashboardPage.buttonAccountSettings.click();
+});
+
+
+
