@@ -25,7 +25,3 @@ When(/^I create an employee$/, async () => {
 When(/^I add new (virtual|physical) card(?: with the categories "([^"]*)")?(?: with "([^"]*)" limit)?(?: with payment types "([^"]*)")?$/, async (type, categoryType, limit, paymentType) => {
     await NewCardPage.addNewCard(type, categoryType, limit, paymentType);
 });
-
-When(/^I pause execution for (\d+) seconds$/, async (seconds) => {
-    await browser.pause(seconds * 1000);
-});

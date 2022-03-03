@@ -1,4 +1,4 @@
-export const config = {
+exports.config = {
     //
     // ====================
     // Runner Configuration
@@ -21,10 +21,7 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './features/**/login.feature',
-        './features/**/new.card.feature',
-        './features/**/new.allocation.feature',
-        './features/**/new.employee.feature'
+        './features/**/new.virtual.cards.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -61,7 +58,7 @@ export const config = {
         //
         browserName: 'chrome',
          'goog:chromeOptions': {
-             headless: true
+             headless: false
          },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
@@ -100,7 +97,7 @@ export const config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://capital.qa.clearspend.com/',
+    baseUrl: 'https://capital.qa.clearspend.com',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -116,7 +113,7 @@ export const config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['devtools'],
+    services: ['devtools', 'intercept'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -139,7 +136,7 @@ export const config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ['dot', [ 'junit', {
-        outputDir: './',
+        outputDir: './temp',
         outputFileFormat: function (options) {
             return `results-${options.cid}.xml`;
         }
@@ -170,7 +167,7 @@ export const config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 60000,
+        timeout: 600000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
@@ -188,8 +185,9 @@ export const config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function () {
+        global.cardCount = 0;
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -318,7 +316,7 @@ export const config = {
     //onComplete: () => {
         // Generate the report when it all tests are done
         // generate({
-        // Required
+        // TestExecutionId = CAP-476
         // This part needs to be the same path where you store the JSON files
         // default = '.tmp/json/'
         // jsonDir: '.tmp/json/',

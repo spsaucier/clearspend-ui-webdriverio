@@ -24,7 +24,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/*.feature'
+        './features/**/new.virtual.cards.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -46,7 +46,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 2,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -61,24 +61,24 @@ exports.config = {
           screenResolution: '1920x1200',
         },
     },
-    {
-        maxInstances: 1,
-        browserName: 'firefox',
-        browserVersion: '96',
-        platformName: 'Windows 11',
-        'sauce:options': {
-          screenResolution: '1920x1200',
-        },
-    },
-    {
-        maxInstances: 1,
-        browserName: 'safari',
-        browserVersion: '15',
-        platformName: 'macOS 12',
-        'sauce:options': {
-            screenResolution: '1920x1440'
-        }
-    }
+    // {
+    //     maxInstances: 1,
+    //     browserName: 'firefox',
+    //     browserVersion: '96',
+    //     platformName: 'Windows 11',
+    //     'sauce:options': {
+    //       screenResolution: '1920x1200',
+    //     },
+    // },
+    // {
+    //     maxInstances: 1,
+    //     browserName: 'safari',
+    //     browserVersion: '15',
+    //     platformName: 'macOS 12',
+    //     'sauce:options': {
+    //         screenResolution: '1920x1440'
+    //     }
+    // }
 ],
     //
     // ===================
@@ -179,7 +179,7 @@ exports.config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 60000,
+        timeout: 120000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
@@ -197,8 +197,9 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function () {
+        global.cardCount = 0;
+     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
