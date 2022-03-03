@@ -25,6 +25,11 @@ class BusinessLeadership extends Page {
      */
     get inputZipCode() {return $('//div/input[@name="postalCode"]'); }
     get buttonNext() {return $('//button[@class="LDgtd ZXfpb K4lLS"]'); }
+
+    get buttonAddLeader() {return $('//span[contains(text(),"Add a leader")]'); }
+    get radioYes() {return $('//span[contains(text(),"Yes")]'); }
+    get radioNo() {return $('//span[@class="KNeF9"]/span[contains(text(),"No")]'); }
+    get buttonNext() {return $('//button[@class="LDgtd ZXfpb K4lLS"]'); }
     
 
 
