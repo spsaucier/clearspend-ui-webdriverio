@@ -18,8 +18,8 @@ class DashboardPage extends Page {
     get buttonEmployees() {return $('//a/span[contains (text(), "Employees")]'); }
     get buttonCompanySettings() {return $('//a/span[contains (text(), "Company Settings")]'); }
     get buttonAccountSettings() {return $('//a/span[contains (text(), "Account Settings")]'); }
-    get buttonMoreFilters() {return $(''); }
-    get inputBoxSearchTransaction() {return $(''); }
+    get buttonMoreFilters() {return $('//span[contains(text(),"More Filters")]'); }
+    get inputBoxSearchTransaction() {return $('//div/input[@class="fDzhe"]'); }
     
 
 
