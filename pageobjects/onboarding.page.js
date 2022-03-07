@@ -1,5 +1,15 @@
 import Page from './page';
 
+import faker from '@faker-js/faker';
+
+const entityName = faker.company.catchPhraseAdjective();
+const ein = faker.datatype.number({ min: 100000000, max: 999999999 });
+const phoneNumber = faker.phone.phoneNumber('321#######');
+const addressNumber = faker.datatype.number({min: 100, max: 999});
+const title = faker.name.title();
+const ssn = faker.finance.routingNumber();
+
+
 /**
  * sub page containing specific selectors and methods for a specific page
  */
@@ -34,6 +44,9 @@ class OnboardingPage extends Page {
     // Next Button that appears on multiple pages
     get nextButton() { return $('button[type="submit"]'); }
 
+    // Is there anyone else that manages {COMPANY_NAME}}?
+    get ownerName() { return $('//table//tr/td'); }
+
     // Plaid Integration
     // plaid-link-iframe-1 - iFrame
     get continuePlaidButton() { return $('#aut-continue-button'); }
@@ -48,6 +61,55 @@ class OnboardingPage extends Page {
     // Accounts Added + Add Balance
     get amountTextbox() { return $('input[name="amount"]'); }
 
+
+    /**
+    * Method to go through business details section.
+    * @author   Nikita Bogdanov
+    * @param    NO PARAMS YET
+    */
+    async businessDetails() {
+        await this.entityNameTextbox.waitForDisplayed();
+        await this.entityNameTextbox.setValue(entityName);
+        await this.einTextbox.setValue(ein);
+        await this.corporatePhoneNumberTextbox.setValue(phoneNumber);
+        await this.businessDescriptionTextbox.setValue(entityName);
+        await this.merchantCategoryDropdown.setValue('Peripherals and Software');
+        await browser.keys("ArrowDown");
+        await browser.keys("Enter");
+        await this.streetAddressTextbox.waitForExist();
+        await this.streetAddressTextbox.setValue(addressNumber + " ");
+        await browser.pause(3000);
+        await browser.keys("ArrowDown");
+        await browser.keys("Enter");
+        await this.nextButton.waitForEnabled();
+        await this.nextButton.click();
+        await this.titleTextbox.waitForExist();
+        await browser.debug();
+    }
+
+    /**
+    * Method to go through business leadership section.
+    * @author   Nikita Bogdanov
+    * @param    NO PARAMS YET
+    */
+    async businessLeadership() {
+        await this.titleTextbox.setValue(title);
+        await this.monthDropdown.setValue("March");
+        await browser.keys("ArrowDown");
+        await browser.keys("Enter");
+        await this.dayDropdown.setValue("5");
+        await browser.keys("ArrowDown");
+        await browser.keys("Enter");
+        await this.yearDropdown.setValue("1997");
+        await this.streetAddressTextbox.setValue(addressNumber + " ");
+        await browser.pause(3000);
+        await browser.keys("ArrowDown");
+        await browser.keys("Enter");
+        await this.ssnTextbox.setValue(ssn);
+        await this.percentageOwnershipTextbox.setValue("100");
+        await this.nextButton.click();
+        await browser.debug();
+    }
 }
 
 export default new OnboardingPage();

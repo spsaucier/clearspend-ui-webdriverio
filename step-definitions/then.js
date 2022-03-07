@@ -36,6 +36,7 @@ Then("I expect the {string} cards count to be increased by {int}", async (cardTy
     let newCount = await CardsPage.countCards(cardType);
     console.log("New Count before expect: " + newCount);
     await browser.pause(500);
+    console.log(global.cardCount);
     expect(newCount).toBe(global.cardCount + createdCards);
     console.log("Final Count: " + newCount);
 });

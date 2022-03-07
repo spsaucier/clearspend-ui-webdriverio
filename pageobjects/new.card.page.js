@@ -191,6 +191,169 @@ class NewCardPage extends Page {
         await CardsPage.addNewCardButton.waitForDisplayed();
     }
 
+
+    /**
+    * Method to select allocation
+    * @author   Nikita Bogdanov
+    * @param    {String} options - allocation options
+    */  
+    async selectAllocation(options) {
+        if (options === "root") {
+            await this.allocationInput.waitForDisplayed();
+            await this.allocationInput.click();
+            await this.inputOptions.waitForDisplayed();
+            await this.inputOptions.$$('li')[0].click();
+        } else {
+            await this.allocationInput.waitForDisplayed();
+            await this.allocationInput.click();
+            await this.inputOptions.waitForDisplayed();
+            await this.inputOptions.$$('li')[1].click();   
+        }
+
+    }
+
+    /**
+    * Method to select an employee
+    * @author   Nikita Bogdanov
+    * @param    {String} options - allocation options
+    */  
+    async selectEmployee(type) {
+        await this.employeeInput.waitForDisplayed();
+        await this.employeeInput.click();
+        switch (type) {
+            case "owner":
+                await this.inputOptions.waitForDisplayed();
+                await this.inputOptions.$$('li')[0].click();
+                break;
+            case "employee":
+                await this.inputOptions.waitForDisplayed();
+                await this.inputOptions.$$('li')[1].click();
+                break;
+            case "new employee":
+                break;
+                // TO DO: write the steps to create a new employee.
+        }
+    }
+
+
+    /**
+    * Method to select virtua or physical card.
+    * @author   Nikita Bogdanov
+    * @param    {String} type - physical or virtual
+    */  
+    async cardType(type) {
+        await this.virtualCardCheckbox.waitForExist();
+        if (type !== "physical") {
+            await browser.execute(`document.querySelector("${await this.virtualCardCheckbox.selector}").click()`);
+        } else {
+            await browser.execute(`document.querySelector("${await this.physicalCardCheckbox.selector}").click()`);
+            await browser.execute(`document.querySelector("${await this.deliveryAddressCheckbox.selector}").click()`);
+        }
+    }
+
+
+    /**
+    * Method to enable showing employee name.
+    * @author   Nikita Bogdanov
+    */  
+    async showEmployeeName() {
+        await this.showEmployeeNameCheckbox.waitForDisplayed();
+        await this.showEmployeeNameCheckbox.click();      
+    }
+
+    /**
+    * Method to select virtua or physical card.
+    * @author   Nikita Bogdanov
+    * @param    {String} type - daily, monthly and transaction
+    * @param    {String} amount - any amount?
+    */  
+    async setlimits(type, amount) {
+        switch (type) {
+            case "daily":
+                await browser.pause(1500);
+                await browser.execute(`document.querySelector("${await this.dailyLimitCheckbox.selector}").click()`);
+                await this.dailyLimitTextbox.waitForExist();
+                await this.dailyLimitTextbox.setValue(amount);
+                await expect(this.dailyLimitTextbox).toBeDisplayed();
+                await expect(this.dailyLimitTextbox).toHaveValue(amount);
+                break;
+            case "monthly":
+                await browser.pause(1500);
+                await this.monthlyLimitCheckbox.waitForExist();
+                await browser.execute(`document.querySelector("${await this.monthlyLimitCheckbox.selector}").click()`);
+                await this.monthlyLimitTextbox.waitForExist();
+                await this.monthlyLimitTextbox.setValue(amount);
+                await expect(this.monthlyLimitTextbox).toBeDisplayed();
+                await expect(this.monthlyLimitTextbox).toHaveValue(amount);
+                break;
+            case "transaction":
+                await browser.pause(1500);
+                await this.transactionLimitCheckbox.waitForExist();
+                await browser.execute(`document.querySelector("${await this.transactionLimitCheckbox.selector}").click()`);
+                await this.transactionLimitTextbox.waitForExist();
+                await this.transactionLimitTextbox.setValue(amount);
+                await expect(this.transactionLimitTextbox).toBeDisplayed();
+                await expect(this.transactionLimitTextbox).toHaveValue(amount);
+                break;
+            default:
+                break;
+        }
+    }
+
+    async setCategories(categoryType) {
+        if (await this.allCategoriesCheckbox.isSelected() === true) {
+            await this.allPaymentTypesCheckbox.scrollIntoView();
+            await browser.execute(`document.querySelector("${await this.allCategoriesCheckbox.selector}").click()`);
+            await browser.pause(3000);
+            console.log("Selection for categories is removed. Starting to select " + categoryType.toUpperCase());
+        } else {
+            console.log("All categories checkbox is not selected");
+        }
+        switch (categoryType) {
+            case "child care":
+                await browser.execute(`document.querySelector("${await this.childCareCheckbox.selector}").click()`);
+                await expect(this.childCareCheckbox).toBeSelected();
+                break;
+            case "digital goods":
+                await browser.execute(`document.querySelector("${await this.digitalGoodsCheckbox.selector}").click()`);
+                await expect(this.digitalGoodsCheckbox).toBeSelected();
+                break;
+            case "education":
+                await browser.execute(`document.querySelector("${await this.educationCheckbox.selector}").click()`);
+                await expect(this.educationCheckbox).toBeSelected();
+                break;
+            case "entertainment":
+                await browser.execute(`document.querySelector("${await this.entertainmentCheckbox.selector}").click()`);
+                await expect(this.entertainmentCheckbox).toBeSelected();
+                break;
+            case "all categories":
+                await browser.execute(`document.querySelector("${await this.allCategoriesCheckbox.selector}").click()`);
+                await expect(this.allCategoriesCheckbox).toBeSelected();
+                break;
+            default:
+                break;
+        }
+    }
+
+    async setPaymentTypes(paymentType) {
+        switch (paymentType) {
+            case "pos":
+                await browser.execute(`document.querySelector("${await this.posCheckbox.selector}").click()`);
+                await expect(this.posCheckbox).toBeSelected();
+                break;
+            case "online":
+                await browser.execute(`document.querySelector("${await this.onlineCheckbox.selector}").click()`);
+                await expect(this.onlineCheckbox).toBeSelected();
+                break;
+            case "manual entry":
+                await browser.execute(`document.querySelector("${await this.manualEntryCheckbox.selector}").click()`);
+                await expect(this.manualEntryCheckbox).toBeSelected();
+                break;
+            default:
+                break;
+        }
+    }
+
     open() {
         return super.open('cards/edit');
     }

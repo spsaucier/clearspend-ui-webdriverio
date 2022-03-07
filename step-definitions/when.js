@@ -1,4 +1,5 @@
 import { When } from '@wdio/cucumber-framework';
+import CardsPage from '../pageobjects/cards.page';
 import NewCardPage from '../pageobjects/new.card.page';
 import AllocationsPage from '../pageobjects/allocations.page';
 import NewAllocationPage from '../pageobjects/new.allocation.page';
@@ -24,4 +25,16 @@ When(/^I create an employee$/, async () => {
 
 When(/^I add new (virtual|physical) card(?: with the categories "([^"]*)")?(?: with "([^"]*)" limit)?(?: with payment types "([^"]*)")?$/, async (type, categoryType, limit, paymentType) => {
     await NewCardPage.addNewCard(type, categoryType, limit, paymentType);
+});
+
+When("I create new card with {word} allocation", async (allocationType) => {
+    await expect(CardsPage.addNewCardButton).toBeDisplayed();
+    await CardsPage.addNewCardButton.click();
+    await expect(NewCardPage.allocationInput).toBeDisplayed();
+    await NewCardPage.selectAllocation(allocationType);
+    await NewCardPage.selectEmployee("owner");
+    await NewCardPage.cardType("virtual");
+    await expect(NewCardPage.createCardButton).toBeEnabled();
+    await NewCardPage.createCardButton.click();
+    await expect(CardsPage.successNotification).toBeDisplayed();
 });

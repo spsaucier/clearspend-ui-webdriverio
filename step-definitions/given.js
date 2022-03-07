@@ -1,12 +1,15 @@
 import { Given } from '@wdio/cucumber-framework';
-import LoginPage from '../pageobjects/login.page';
-import DashboardPage from '../pageobjects/dashboard.page';
-import CardsPage from '../pageobjects/cards.page';
 import AllocationsPage from '../pageobjects/allocations.page';
+import CardsPage from '../pageobjects/cards.page';
+import DashboardPage from '../pageobjects/dashboard.page';
 import EmployeesPage from '../pageobjects/employees.page';
+import LoginPage from '../pageobjects/login.page';
+import OnboardingPage from '../pageobjects/onboarding.page';
+import SignUpPage from '../pageobjects/sign.up.page';
 
 const pages = {
     login: LoginPage,
+    signup: SignUpPage,
     cards: CardsPage,
     allocations: AllocationsPage,
     employees: EmployeesPage
@@ -20,7 +23,12 @@ Given(/^I am on the (\w+) page$/, async (page) => {
 
 // TO DO: Write steps for creating a new account and going though KYC/KYB.
 Given('I register an account', async () => {
-
+    await SignUpPage.signUp();
+    await expect(OnboardingPage.entityNameTextbox).toBeDisplayed();
+    await OnboardingPage.businessDetails();
+    await expect(OnboardingPage.titleTextbox).toBeDisplayed();
+    await OnboardingPage.businessLeadership();
+    await expect(OnboardingPage.ownerName).toHaveText(global.fullName);
 });
 
 // Login with the user specified in .env file.
