@@ -1,11 +1,12 @@
 import Page from './page';
 import { faker } from '@faker-js/faker';
 
-
 const firstName = faker.name.firstName();
 const lastName = faker.name.lastName();
 const email = faker.internet.email();
 const phone = faker.phone.phoneNumber('321#######');
+const addressNumber = Math.floor(1000 + Math.random() * 9000);
+
 /**
  * sub page containing specific selectors and methods for a specific page
  */
@@ -29,7 +30,7 @@ class NewEmployeePage extends Page {
         await this.inputLastName.setValue(lastName);
         await this.inputEmail.setValue(email);
         await this.inputPhone.setValue(phone);
-        await this.inputAddress.setValue("2510 ");
+        await this.inputAddress.setValue(addressNumber);
         await browser.pause(2000);
         await browser.keys("ArrowDown");
         await browser.keys("Enter");

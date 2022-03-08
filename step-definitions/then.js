@@ -7,54 +7,40 @@ import EmployeesPage from '../pageobjects/employees.page';
 import CompanySettingsPage from '../pageobjects/companySettings.page';
 import AccountSettingsPage from '../pageobjects/accountSettings.page';
 
-
-// TODO:
+// Validate Dashboard page is opened
 Then(/^I expect to see the dashboard page$/, async () => {
     await DashboardPage.headerHome.waitForDisplayed();
     await expect(DashboardPage.headerHome).toBeDisplayed();
 });
 
-// TODO:
+// Validate Allocations page is opened
 Then(/^I expect to see the allocations page$/, async () => {
     await AllocationsPage.buttonNewAllocation.waitForDisplayed();
     await expect(AllocationsPage.buttonNewAllocation).toBeDisplayed();
 });
 
-// TODO:
-Then(/^I expect to see the employees page$/, async () => {
-
-});
-
-// Validate the cards page is opened
+// Validate the Cards page is opened
 Then(/^I expect to see the cards page$/, async () => {
     await expect(CardsPage.cardsHeader).toBeDisplayed();
 });
 
-
-Then (/^I expect to see the allocation page$/, async () => {
-    await expect(AllocationsPage.buttonNewAllocation).toBeDisplayed();
+// Counting all the physical or virtual cards. Saves the count to variable global.cardCount
+Then("I expect to count all {word} cards", async (cardType) => {
+    await CardsPage.open();
+    if (cardType === "physical") {
+        global.cardCount = await CardsPage.countCards(cardType);
+    } else {
+        global.cardCount = await CardsPage.countCards(cardType);
+    }
+    console.log("Initial count: " + global.cardCount);
 });
 
-
-Then (/^I expect to see the card page$/, async() => {
-    await expect(CardsPage.cardsHeader).toBeDisplayed();
+// Counting all the virtual or physical cards and expects new cards to be displayed.
+Then("I expect the {string} cards count to be increased by {int}", async (cardType, createdCards) => {
+    let newCount = await CardsPage.countCards(cardType);
+    console.log("New Count before expect: " + newCount);
+    await browser.pause(500);
+    console.log(global.cardCount);
+    expect(newCount).toBe(global.cardCount + createdCards);
+    console.log("Final Count: " + newCount);
 });
-
-
-Then (/^I expect to see the accounting page$/, async() => {
-    await expect (AccountingPage.headerAccounting).toBeDisplayed();
-
-});
-
-Then (/^I expect to see the acccouting page $/, async() => {
-    await (EmployeesPage.buttonNewEmployee).toBeDisplayed();
-});
-
-Then (/^I expect to see the companySettings page$/, async () => {
-    await expect (CompanySettingsPage.headerCompanySettings).toBeDisplayed();
-});
-
-Then (/^I expect to see the accountSettings page$/, async() => {
-    await expect (AccountSettingsPage.headerAccountSettings).toBeDisplayed();
-});
-
