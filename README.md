@@ -1,18 +1,16 @@
 ## Installation
 
-This project is tested on **Node v16** and above.  While earlier versions of node may be compatible, but they have not been verified.
+Reqiuirements for Node JS - Node 14 and above.
+`npm i` - install all the dependencies.
 
-`Node.JS:` Install  from the site - https://nodejs.org/en/  take the LTS version based on your Operating system. Please make sure you install NodeJS globally.
 
-## Run Some Sample Tests
+## Run Some Sample Tests Locally
 
-To execute the entire test suite in local development, you can use any one of the options mentioned below
+`npm run wdio:local`. Executes all features in the [`./features/*.feature`] directory, executes features locally, on your own machine. (For debugging purposes)
 
-Option 1: `npm run wdio:local`. Executes all features in the [`./features/*.feature`] directory, executes features locally, on your own machine. (For debugging purposes)
-
-Option 2: `npm run wdio:sauce:web`. Executes all features in Sauce Labs for Web (Chrome, Firefox, Safari).
-
-Option 3: `npm run wdio:sauce:mobile`. Executes all features in Sauce Labs using Mobile Browsers (iOS Safari, Chrome Android).
+## Run Some Sample Tests in Sauce Labs
+`npm run wdio:sauce:web` - executes all features in Sauce Labs using Desktop.
+`npm run wdio:sauce:mobile` - executes all features in Sauce Labs using Mobile browsers, just in case we would want to test web app on mobile devices.
 
 ## Config Files - config/wdio.conf.js, config/wdio.sauce.mobile.js, config/wdio.sauce.web.js.
 
