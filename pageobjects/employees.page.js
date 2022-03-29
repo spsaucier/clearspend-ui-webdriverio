@@ -10,10 +10,10 @@ class EmployeesPage extends Page {
     get buttonNewEmployee() { return $('//button//span[text()="New employee"]'); }
     get successNotification() { return $('h3 ~ div'); }
     get employeesCount() { return $$('thead ~ tbody tr'); }
+    get nextButton() { return $("button[data-name=Next page]"); }
     /*
      * overwrite specific options to adapt it to page object
      */
-
     open() {
         return super.open('employees');
     }

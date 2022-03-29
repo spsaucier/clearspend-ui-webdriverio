@@ -1,5 +1,5 @@
 import Page from './page';
-import CardsPage from './cards.page';
+import NewEmployeesPage from './new.employee.page';
 
 class NewCardPage extends Page {
 
@@ -10,9 +10,10 @@ class NewCardPage extends Page {
     get allocationInput() { return $('//input[@name="allocation"]'); }
     get employeeInput() { return $('//input[@name="employee"]'); }
     get inputOptions() { return $('//ul'); }
-    get addNewEmployeeOption() { return $('#add-employee'); }
+    get employeesFromDropdown() { return $$('//ul/li/span'); }
+    get addNewEmployeeButton() { return $('#add-employee'); }
     get addEmployeeButton() { return $('//button//span[text()="Add employee"]'); }
-    get employeeOverlayClose() { return $('header > h3 ~ button'); }
+    get newEmployeeOverlayClose() { return $('header > h3 ~ button'); }
 
     // Checkboxes - Virtual Card and Physical Card checkboxes.
     get virtualCardCheckbox() { return $('input[name=card-type_VIRTUAL]'); }
@@ -50,161 +51,18 @@ class NewCardPage extends Page {
 
 
     /**
-    * Method to create physical or virtual card
-    * @author   Nikita Bogdanov
-    * @param    {String} type - either "physical" or "virtual"
-    * @param    {String} categoryType - all categories or child care, digital goods
-    * @param    {String} limit - daily, monthly ot transaction limit
-    */    
-    async addNewCard(type, categoryType, limit, paymentType) {
-        await CardsPage.successNotification.waitForDisplayed({ reverse: true});
-
-        // Click on Add New Card buttton
-        await CardsPage.addNewCardButton.click();
-
-        // Navigated to New Card page
-        await expect(this.pageHeader).toHaveText('New Card');
-
-        // Selecting Root Allocation
-        await this.allocationInput.click();
-        await this.inputOptions.waitForDisplayed();
-        await this.inputOptions.$$('li')[0].click();
-
-        // Selecting an Employee
-        await this.employeeInput.click();
-        await this.inputOptions.waitForDisplayed();
-        await this.inputOptions.$$('li')[0].click();
-
-        // Depends on passed value - clicks on virtual card checkbox or physical, if physical also clicks on delivery address
-        if (type !== "physical") {
-            await browser.execute(`document.querySelector("${await this.virtualCardCheckbox.selector}").click()`);
-        } else {
-            await browser.execute(`document.querySelector("${await this.physicalCardCheckbox.selector}").click()`);
-            await browser.execute(`document.querySelector("${await this.deliveryAddressCheckbox.selector}").click()`);
-        }
-
-        // Remove selection for categories, inherited from allocation
-        if (await this.allCategoriesCheckbox.isSelected() === true && categoryType !== null) {
-            await this.allPaymentTypesCheckbox.scrollIntoView();
-            await browser.execute(`document.querySelector("${await this.allCategoriesCheckbox.selector}").click()`);
-            await browser.pause(3000);
-            console.log("Selection for categories is removed. Starting to select " + categoryType.toUpperCase());
-        } else {
-            console.log("All categories checkbox is not selected");
-        }
-
-        // Spend Cotrols Steps
-        switch (categoryType) {
-            case "child care":
-                await browser.execute(`document.querySelector("${await this.childCareCheckbox.selector}").click()`);
-                await expect(this.childCareCheckbox).toBeSelected();
-                break;
-            case "digital goods":
-                await browser.execute(`document.querySelector("${await this.digitalGoodsCheckbox.selector}").click()`);
-                await expect(this.digitalGoodsCheckbox).toBeSelected();
-                break;
-            case "education":
-                await browser.execute(`document.querySelector("${await this.educationCheckbox.selector}").click()`);
-                await expect(this.educationCheckbox).toBeSelected();
-                break;
-            case "entertainment":
-                await browser.execute(`document.querySelector("${await this.entertainmentCheckbox.selector}").click()`);
-                await expect(this.entertainmentCheckbox).toBeSelected();
-                break;
-            case "all categories":
-                await browser.execute(`document.querySelector("${await this.allCategoriesCheckbox.selector}").click()`);
-                await expect(this.allCategoriesCheckbox).toBeSelected();
-                break;
-            default:
-                break;
-        }
-
-        // Limits - Daily, Monthly or/and Transaction limit
-        switch (limit) {
-            case "daily":
-                await browser.pause(1500);
-                await browser.execute(`document.querySelector("${await this.dailyLimitCheckbox.selector}").click()`);
-                await this.dailyLimitTextbox.waitForExist();
-                await this.dailyLimitTextbox.setValue('50');
-                await expect(this.dailyLimitTextbox).toBeDisplayed();
-                await expect(this.dailyLimitTextbox).toHaveValue("50");
-                break;
-            case "monthly":
-                await browser.pause(1500);
-                await this.monthlyLimitCheckbox.waitForExist();
-                await browser.execute(`document.querySelector("${await this.monthlyLimitCheckbox.selector}").click()`);
-                await this.monthlyLimitTextbox.waitForExist();
-                await this.monthlyLimitTextbox.setValue("500");
-                await expect(this.monthlyLimitTextbox).toBeDisplayed();
-                await expect(this.monthlyLimitTextbox).toHaveValue("500");
-                break;
-            case "transaction":
-                await browser.pause(1500);
-                await this.transactionLimitCheckbox.waitForExist();
-                await browser.execute(`document.querySelector("${await this.transactionLimitCheckbox.selector}").click()`);
-                await this.transactionLimitTextbox.waitForExist();
-                await this.transactionLimitTextbox.setValue("500");
-                await expect(this.transactionLimitTextbox).toBeDisplayed();
-                await expect(this.transactionLimitTextbox).toHaveValue("500");
-                break;
-            default:
-                break;
-        }
-
-        // Remove selection for payment types, inherited from allocation
-        if (await this.allPaymentTypesCheckbox.isSelected() === true && paymentType !== null) {
-            await this.allPaymentTypesCheckbox.scrollIntoView();
-            await browser.execute(`document.querySelector("${await this.allPaymentTypesCheckbox.selector}").click()`);
-            console.log("Selection for payment types is removed. Starting to select " + paymentType.toUpperCase());
-        } else {
-            console.log("No payment types are selected.");
-        }
-
-        // Payment Types - POS, Online and Manual entry
-        switch (paymentType) {
-            case "pos":
-                await browser.execute(`document.querySelector("${await this.posCheckbox.selector}").click()`);
-                await expect(this.posCheckbox).toBeSelected();
-                break;
-            case "online":
-                await browser.execute(`document.querySelector("${await this.onlineCheckbox.selector}").click()`);
-                await expect(this.onlineCheckbox).toBeSelected();
-                break;
-            case "manual entry":
-                await browser.execute(`document.querySelector("${await this.manualEntryCheckbox.selector}").click()`);
-                await expect(this.manualEntryCheckbox).toBeSelected();
-                break;
-            default:
-                break;
-        }
-
-        // Wait for Create Card button is displayed/enabled
-        await this.createCardButton.waitForEnabled();
-        await browser.pause(1000);
-
-        // Clicking Create Card button
-        await this.createCardButton.click();
-
-        // Card is created and validate notification
-        await expect(CardsPage.successNotification).toBeDisplayed();
-
-        await CardsPage.addNewCardButton.waitForDisplayed();
-    }
-
-
-    /**
     * Method to select allocation
     * @author   Nikita Bogdanov
     * @param    {String} options - allocation options
     */  
     async selectAllocation(options) {
         if (options === "root") {
-            await this.allocationInput.waitForDisplayed();
+            await this.allocationInput.waitForExist();
             await this.allocationInput.click();
             await this.inputOptions.waitForDisplayed();
             await this.inputOptions.$$('li')[0].click();
         } else {
-            await this.allocationInput.waitForDisplayed();
+            await this.allocationInput.waitForExist();
             await this.allocationInput.click();
             await this.inputOptions.waitForDisplayed();
             await this.inputOptions.$$('li')[1].click();   
@@ -225,16 +83,28 @@ class NewCardPage extends Page {
                 await this.inputOptions.waitForDisplayed();
                 await this.inputOptions.$$('li')[0].click();
                 break;
-            case "employee":
-                await this.inputOptions.waitForDisplayed();
-                await this.inputOptions.$$('li')[1].click();
-                break;
             case "new employee":
+                await this.inputOptions.waitForDisplayed();
+                await this.addNewEmployeeButton.waitForDisplayed();
+                await this.addNewEmployeeButton.click();
+                await NewEmployeesPage.createEmployee();
+                await this.newEmployeeOverlayClose.waitForDisplayed({ reverse: true });
                 break;
-                // TO DO: write the steps to create a new employee.
         }
     }
 
+    async employeeWithName(name) {
+        await this.employeeInput.waitForDisplayed();
+        await this.employeeInput.click();
+        await browser.pause(3000);
+        for (let i = 0; i < await this.employeesFromDropdown.length; i++) {
+            if (await this.employeesFromDropdown[i].getText() === name) {
+                await this.employeesFromDropdown[i].click();
+            } else {
+                console.log("Employee with provided name is not found...");
+            }
+        }
+    }
 
     /**
     * Method to select virtua or physical card.
@@ -253,12 +123,12 @@ class NewCardPage extends Page {
 
 
     /**
-    * Method to enable showing employee name.
+    * Method to enable/disable showing employee name.
     * @author   Nikita Bogdanov
     */  
     async showEmployeeName() {
         await this.showEmployeeNameCheckbox.waitForDisplayed();
-        await this.showEmployeeNameCheckbox.click();      
+        await this.showEmployeeNameCheckbox.click();
     }
 
     /**
@@ -267,15 +137,13 @@ class NewCardPage extends Page {
     * @param    {String} type - daily, monthly and transaction
     * @param    {String} amount - any amount?
     */  
-    async setlimits(type, amount) {
+    async setlimit(type, amount) {
         switch (type) {
             case "daily":
                 await browser.pause(1500);
                 await browser.execute(`document.querySelector("${await this.dailyLimitCheckbox.selector}").click()`);
                 await this.dailyLimitTextbox.waitForExist();
                 await this.dailyLimitTextbox.setValue(amount);
-                await expect(this.dailyLimitTextbox).toBeDisplayed();
-                await expect(this.dailyLimitTextbox).toHaveValue(amount);
                 break;
             case "monthly":
                 await browser.pause(1500);
@@ -283,8 +151,6 @@ class NewCardPage extends Page {
                 await browser.execute(`document.querySelector("${await this.monthlyLimitCheckbox.selector}").click()`);
                 await this.monthlyLimitTextbox.waitForExist();
                 await this.monthlyLimitTextbox.setValue(amount);
-                await expect(this.monthlyLimitTextbox).toBeDisplayed();
-                await expect(this.monthlyLimitTextbox).toHaveValue(amount);
                 break;
             case "transaction":
                 await browser.pause(1500);
@@ -292,8 +158,6 @@ class NewCardPage extends Page {
                 await browser.execute(`document.querySelector("${await this.transactionLimitCheckbox.selector}").click()`);
                 await this.transactionLimitTextbox.waitForExist();
                 await this.transactionLimitTextbox.setValue(amount);
-                await expect(this.transactionLimitTextbox).toBeDisplayed();
-                await expect(this.transactionLimitTextbox).toHaveValue(amount);
                 break;
             default:
                 break;
@@ -304,8 +168,6 @@ class NewCardPage extends Page {
         if (await this.allCategoriesCheckbox.isSelected() === true) {
             await this.allPaymentTypesCheckbox.scrollIntoView();
             await browser.execute(`document.querySelector("${await this.allCategoriesCheckbox.selector}").click()`);
-            await browser.pause(3000);
-            console.log("Selection for categories is removed. Starting to select " + categoryType.toUpperCase());
         } else {
             console.log("All categories checkbox is not selected");
         }
@@ -336,6 +198,12 @@ class NewCardPage extends Page {
     }
 
     async setPaymentTypes(paymentType) {
+        if (await this.allPaymentTypesCheckbox.isSelected() === true) {
+            await this.allPaymentTypesCheckbox.scrollIntoView();
+            await browser.execute(`document.querySelector("${await this.allPaymentTypesCheckbox.selector}").click()`);
+        } else {
+            console.log("All payment types checkbox is not selected");
+        }
         switch (paymentType) {
             case "pos":
                 await browser.execute(`document.querySelector("${await this.posCheckbox.selector}").click()`);
@@ -348,6 +216,10 @@ class NewCardPage extends Page {
             case "manual entry":
                 await browser.execute(`document.querySelector("${await this.manualEntryCheckbox.selector}").click()`);
                 await expect(this.manualEntryCheckbox).toBeSelected();
+                break;
+            case "all":
+                await browser.execute(`document.querySelector("${await this.allPaymentTypesCheckbox.selector}").click()`);
+                await expect(this.allPaymentTypesCheckbox).toBeSelected();
                 break;
             default:
                 break;

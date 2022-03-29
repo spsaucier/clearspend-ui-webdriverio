@@ -5,7 +5,7 @@ import NewCardPage from './new.card.page';
 class CardsPage extends Page {
 
     get cardsHeader() { return $('//h1/span[text()="Cards"]'); }
-    get addNewCardButton() { return $('//button//span[text()="New Card"]'); }
+    get addNewCardButton() { return $('//header//button'); }
     get cardsCounter() { return $$('//tbody/tr'); }
     get firstPage() { return $('button[data-name="Page 1"]'); }
     get paginationNextButton() { return $('button[data-name="Next page"]'); }
@@ -22,14 +22,14 @@ class CardsPage extends Page {
     */  
     async countCards(cardType) {
         let cardCount = 0;
-
+        await this.paginationNextButton.waitForDisplayed();
         if(cardType === "physical") {
             cardCount = await this.physicalCards.length;
         } else {
             cardCount = await this.virtualCards.length;
         }
 
-        while (await this.paginationNextButton.isClickable() === true) {
+        while (await this.paginationNextButton.isEnabled() === true) {
             switch (cardType) {
                 case "physical": {
                     await this.paginationNextButton.click();
