@@ -1,4 +1,5 @@
 import { When } from '@wdio/cucumber-framework';
+
 import CardsPage from '../pageobjects/cards.page';
 import NewCardPage from '../pageobjects/new.card.page';
 import AllocationsPage from '../pageobjects/allocations.page';
