@@ -21,7 +21,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/sign.up.feature'
+        './features/**/cards.feature',
     ],
     // Patterns to exclude.
     exclude: [
@@ -43,7 +43,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -57,9 +57,9 @@ exports.config = {
         maxInstances: 1,
         //
         browserName: 'chrome',
-         'goog:chromeOptions': {
-             headless: false
-         },
+        //  'goog:chromeOptions': {
+        //      headless: false
+        //  },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -73,7 +73,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: 'info',
     //
     // Set specific log levels per logger
     // loggers:
@@ -100,7 +100,7 @@ exports.config = {
     baseUrl: 'https://capital.qa.clearspend.com',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 60000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
@@ -113,7 +113,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['devtools', 'intercept'],
+    services: ['devtools'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -135,13 +135,15 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['dot', [ 'junit', {
-        outputDir: './temp',
-        outputFileFormat: function (options) {
-            return `results-${options.cid}.xml`;
-        }
-    }]
-],
+//     reporters: ['dot', [ 'junit', {
+//         outputDir: './temp',
+//         outputFileFormat: function (options) {
+//             return `results-${options.cid}.xml`;
+//         }
+//     }]
+// ],
+    reporters: ['spec'],
+    // outputDir: 'reports',
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -185,9 +187,8 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    onPrepare: function () {
-        global.cardCount = 0;
-    },
+    // onPrepare: function () {
+    // },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -216,7 +217,7 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
+    // before: function () {
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -314,15 +315,6 @@ exports.config = {
      * Gets executed after all workers got shut down and the process is about to exit.
      */
     //onComplete: () => {
-        // Generate the report when it all tests are done
-        // generate({
-        // TestExecutionId = CAP-476
-        // This part needs to be the same path where you store the JSON files
-        // default = '.tmp/json/'
-        // jsonDir: '.tmp/json/',
-        // reportPath: '.tmp/report/',
-        // for more options see https://github.com/wswebcreation/multiple-cucumber-html-reporter#options
-        // });
     //}
     /**
      * Gets executed right after terminating the webdriver session.

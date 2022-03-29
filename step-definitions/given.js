@@ -21,7 +21,7 @@ Given(/^I am on the (\w+) page$/, async (page) => {
 
 });
 
-// TO DO: Write steps for creating a new account and going though KYC/KYB.
+// Register new account and go through onboarding process.
 Given('I register an account', async () => {
     await SignUpPage.signUp();
     await expect(OnboardingPage.entityNameTextbox).toBeDisplayed();
@@ -29,15 +29,30 @@ Given('I register an account', async () => {
     await expect(OnboardingPage.titleTextbox).toBeDisplayed();
     await OnboardingPage.businessLeadership();
     await expect(OnboardingPage.ownerName).toHaveText(global.fullName);
+    await expect(OnboardingPage.nextButton).toBeDisplayed;
+    await OnboardingPage.addNewLeader();
+    await OnboardingPage.editAddress();
+    await OnboardingPage.plaidConnect();
+    await expect(OnboardingPage.amountTextbox).toBeDisplayed();
+    await OnboardingPage.addBalance();
+    await expect(DashboardPage.headerHome).toBeDisplayedInViewport();
+});
+
+// Sign up SD
+Given('I sign up to the application', async () => {
+    await expect(SignUpPage.firstNameTextbox).toBeDisplayed();
+    await expect(SignUpPage.lastNameTextbox).toBeDisplayed();
+    await expect(SignUpPage.workEmailTextbox).toBeDisplayed();
+    await expect(SignUpPage.nextButton).toBeDisplayed();
+    await SignUpPage.enterUserDetails();
+    await expect(SignUpPage.nextButton).toBeEnabled();
+    await SignUpPage.clickNextButton();
+    await SignUpPage.enterConfirmationCode();
 });
 
 // Login with the user specified in .env file.
 Given('I sign in to the application', async () => {
     await LoginPage.login();
+    await LoginPage.twoFactorAuthentication();
     await expect(DashboardPage.headerHome).toBeDisplayedInViewport();
-});
-
-// Login with the user specified in feature file
-Given('I sign in to the application with {string}', async (email) => {
-    await LoginPage.loginWith(email);
 });

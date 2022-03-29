@@ -1,5 +1,8 @@
 import Page from './page';
 import AllocationsPage from './allocations.page';
+import faker from '@faker-js/faker';
+
+const randomWord = faker.random.word();
 
 
 class NewAllocationPage extends Page {
@@ -10,19 +13,18 @@ class NewAllocationPage extends Page {
     get inputAllocationOwner() { return $('//input[@name="employee"]'); }
     get buttonCreateAllocation() { return $('//button//span[text()="Create Allocation"]'); }
 
-    async createAllocation() {
+    async createAllocation(allocationName) {
         await AllocationsPage.buttonNewAllocation.click();
-        await expect(this.inputParentAllocation).toBeDisplayedInViewport();
         await this.inputParentAllocation.click();
         await browser.keys("ArrowDown");
         await browser.keys("Enter");
-        await this.inputAllocationLabel.setValue("SubAllocation");
-        await this. inputAmount.setValue("1");
+        await this.inputAllocationLabel.setValue(allocationName || randomWord);
+        await this.inputAmount.setValue("1");
         await this.inputAllocationOwner.click();
         await browser.keys("ArrowDown");
         await browser.keys("Enter");
-        await expect(this.buttonCreateAllocation).toBeEnabled();
         await this.buttonCreateAllocation.click();
+        await this.buttonCreateAllocation.waitForDisplayed({ reverse: true});
     }
 
     open() {

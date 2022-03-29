@@ -24,7 +24,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/new.virtual.cards.feature'
+        './features/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
@@ -56,16 +56,17 @@ exports.config = {
         maxInstances: 1,
         browserName: 'chrome',
         browserVersion: 'latest',
-        platformName: 'Windows 11',
+        platformName: 'macOS 12',
         'sauce:options': {
-          screenResolution: '1920x1200',
+          screenResolution: '2048x1536',
+          prerun: "storage:filename=uploadFile.sh"
         },
     },
     // {
     //     maxInstances: 1,
     //     browserName: 'firefox',
     //     browserVersion: '96',
-    //     platformName: 'Windows 11',
+    //     platformName: 'Windows 10',
     //     'sauce:options': {
     //       screenResolution: '1920x1200',
     //     },
@@ -87,7 +88,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: 'debug',
     //
     // Set specific log levels per logger
     // loggers:
@@ -129,6 +130,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
+    reggion: 'us',
     services: ['sauce'],
     
     // Framework you want to run your specs with.
@@ -179,7 +181,7 @@ exports.config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 120000,
+        timeout: 240000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
