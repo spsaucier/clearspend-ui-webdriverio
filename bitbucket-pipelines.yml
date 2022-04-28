@@ -1,4 +1,4 @@
-image: node
+image: ianwalter/puppeteer
    
 pipelines:
   custom:
