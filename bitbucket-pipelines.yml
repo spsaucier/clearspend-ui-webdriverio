@@ -4,9 +4,14 @@ pipelines:
   default:
     - parallel:
         - step:
-            name: Build and Test
+            name: Install
             caches:
               - node
             script:
               - npm install
-              - npm run test
+        - step:
+            name: Execute tests
+            caches:
+              - node
+            script:
+              - npm run smoke
