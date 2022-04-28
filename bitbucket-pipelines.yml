@@ -7,5 +7,4 @@ pipelines:
         name: Test Execution
         script:
           - npm install
-          - chromedriver
           - npm run smoke
