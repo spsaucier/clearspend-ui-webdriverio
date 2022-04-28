@@ -1,5 +1,4 @@
 import Page from './page';
-import OnboardingPage from '../pageobjects/onboarding.page';
 import faker from '@faker-js/faker';
 
 
@@ -7,7 +6,6 @@ const firstName = faker.name.firstName();
 const lastName = faker.name.lastName();
 global.fullName = firstName + " " + lastName;
 const email = faker.internet.email();
-global.email = email;
 const phoneNumber = faker.phone.phoneNumber('321#######');
 const password = faker.internet.password();
 global.password = password;
@@ -15,95 +13,60 @@ global.password = password;
 
 class SignUpPage extends Page {
 
+    // ? Sign Up Page - firstName, lastName, email, terms checkbox and next button
     get firstNameTextbox() { return $('input[name="first-name"]'); }
     get lastNameTextbox() { return $('input[name="last-name"]'); }
     get workEmailTextbox() { return $('input[name="email"]'); }
     get termsCheckbox() { return $('input[type=checkbox]'); }
     get nextButton() { return $('button[type=submit]'); }
+    get alreadyHaveAnAccount() { return $('//h3[text()="You already have an account"]'); }
 
+    // ? Confirmation code textbox
     get confirmationCodeTextbox() { return $$('div[data-name="code"] input'); }
-    
+
+    // ? Choose Business Type and Business Structure
     get businessTypeCheckbox() { return $$('input[name=business-type]'); }
     get businessStructureDropdown() { return $('input[name="business-structure"]'); }
     get ownershipCheckbox() { return $$('input[name=is-owner]'); }
     get executiveCheckbox() { return $$('input[name=is-executive]'); }
 
+    // ? Phone Number textbox
     get phoneNumberTextbox() { return $('input[name="phone"]'); }
 
+    // ? Password textbox
     get passwordTextbox() { return $('input[name="new-password"]'); }
     get confirmPasswordTextbox() { return $('input[name="confirm-password"]'); }
 
+    // ! Errors
+    get accountAlreadyExistsError() { return $('//div[text()="Account already exists with this email."]'); }
+
+    // ? Use different email button, after you entered email.
+    get useDifferentEmailButton() { return $('//span[text()="Use different email"]'); }
+
+
     /**
-    * Method to go through registration process.
+    * * Method to enter user details - firstName, lastName and email and click terms checkbox
     * @author   Nikita Bogdanov
-    * @param    NO PARAMS YET
+    * @parameter - email - used random one or the oe you provide in feature file.
     */  
-    async signUp() {
-        // Entering firstName, lastName, Email and clicking next button.
+    async enterUserDetails(email) {
         await this.firstNameTextbox.waitForDisplayed();
         await this.firstNameTextbox.setValue(firstName);
         await this.lastNameTextbox.setValue(lastName);
-        await this.workEmailTextbox.setValue(email);
-        browser.execute( `document.querySelector("${await this.termsCheckbox.selector}").click()`);
-        await browser.pause(3000);
-        await this.nextButton.click();
-        console.log(global.fullName);
-        // Expect to see the confrimation code page
-        await this.confirmationCodeTextbox[0].waitForExist();
-
-        // Entering confirmation code
-        for (let i = 0; i <= 5; i++) {
-            await this.confirmationCodeTextbox[i].setValue("1");
-            await browser.pause(500);
+        console.log(email);
+        if (email == undefined) {
+            email = faker.internet.email();
+            await this.workEmailTextbox.setValue(email);
+        } else {
+            await this.workEmailTextbox.setValue(email);
         }
-
-        // Selecting business type, business structure and ownership.
-        await this.businessTypeCheckbox[1].waitForExist();
-        browser.execute( `document.querySelectorAll("${await this.businessTypeCheckbox.selector}")[1].click()`);
-        await this.businessStructureDropdown.waitForDisplayed();
-        await this.businessStructureDropdown.setValue("Single-member");
-        await browser.keys("ArrowDown");
-        await browser.keys("Enter");
-        browser.execute( `document.querySelectorAll("${await this.ownershipCheckbox.selector}")[0].click()`);
-        await this.executiveCheckbox[0].waitForExist();
-        browser.execute( `document.querySelectorAll("${await this.executiveCheckbox.selector}")[0].click()`);
-        await this.nextButton.waitForEnabled();
-        await this.nextButton.click();
-
-        // Entering phone number
-        await this.phoneNumberTextbox.waitForDisplayed();
-        await this.phoneNumberTextbox.setValue(phoneNumber);
-        await this.nextButton.click();
-        await browser.pause(1500);
-
-        // Entering confirmation code
-        for (let i = 0; i <= 5; i++) {
-            await this.confirmationCodeTextbox[i].setValue("1");
-            await browser.pause(500);
-        }
-
-        // Entering password, confirm password and a clicking create an account
-        await this.passwordTextbox.waitForExist();
-        await this.passwordTextbox.setValue(password);
-        await this.confirmPasswordTextbox.setValue(password);
-        await this.nextButton.waitForEnabled();
-        await this.nextButton.click();
-
-        // Wait for Onboarding Page to be displayed
-        await OnboardingPage.entityNameTextbox.waitForExist();
-
-        // Logging the created account to the console.
-        console.log("New Account is created" + "\nEmail: " + email + "\nPassword: " + password);
-    }
-
-    async enterUserDetails() {
-        await this.firstNameTextbox.waitForDisplayed();
-        await this.firstNameTextbox.setValue(firstName);
-        await this.lastNameTextbox.setValue(lastName);
-        await this.workEmailTextbox.setValue(email);
         browser.execute( `document.querySelector("${await this.termsCheckbox.selector}").click()`);
     }
 
+    /**
+    * * Method to enter confirmation code
+    * @author   Nikita Bogdanov
+    */ 
     async enterConfirmationCode() {
         await this.confirmationCodeTextbox[0].waitForDisplayed();
         // Entering confirmation code
@@ -113,6 +76,10 @@ class SignUpPage extends Page {
         }
     }
 
+    /**
+    * * Method to select businessType - individual, company and nonprofit organization
+    * @author   Nikita Bogdanov
+    */ 
     async selectBusinessType(type) {
         await this.businessTypeCheckbox[0].waitForExist();
         switch(type) {
@@ -131,6 +98,10 @@ class SignUpPage extends Page {
         }
     }
 
+    /**
+    * * Method to select businessStructure - single-member, multi-member, private partneship, public partnership, private corporation and other.
+    * @author   Nikita Bogdanov
+    */ 
     async selectBusinessStructureType(type) {
         await this.businessStructureDropdown.waitForExist();
         switch(type) {
@@ -179,6 +150,10 @@ class SignUpPage extends Page {
         }
     }
 
+    /**
+    * * Method to click on are you owner with ownership - yes or no.
+    * @author   Nikita Bogdanov
+    */ 
     async areYouOwnerWithOwnership(param) {
         await this.ownershipCheckbox[0].waitForExist();
         switch(param) {
@@ -196,6 +171,10 @@ class SignUpPage extends Page {
         }
     }
 
+    /**
+    * * Method to click on are you executive - yes or no.
+    * @author   Nikita Bogdanov
+    */
     async areYouExecutive(param) {
         await this.executiveCheckbox[0].waitForExist();
         switch(param) {
@@ -213,6 +192,10 @@ class SignUpPage extends Page {
         }
     }
 
+    /**
+    * * Method to enter phone number - phoneNumber is generated by Faker.
+    * @author   Nikita Bogdanov
+    */
     async enterPhoneNumber() {
         // Entering phone number
         await this.phoneNumberTextbox.waitForDisplayed();
@@ -221,57 +204,24 @@ class SignUpPage extends Page {
         await this.phoneNumberTextbox.waitForDisplayed({ reverse: true});
     }
 
+    /**
+    * * Method to enter password.
+    * @author   Nikita Bogdanov
+    */
     async enterPassword() {
         await this.passwordTextbox.waitForExist();
         await this.passwordTextbox.setValue(password);
         await this.confirmPasswordTextbox.setValue(password);
     }
 
-    async clickNextButton() {
-        await this.nextButton.waitForDisplayed();
-        if (this.nextButton.isDisplayed() === true) {
-            await this.nextButton.click();
-        } else {
-            await browser.keys("Enter");
-        }
-        await this.nextButton.waitForDisplayed({reverse: true});
-    }
 
+    /**
+    * * Method to open Sign-Up page.
+    * @author   Nikita Bogdanov
+    */
     open() {
         return super.open('signup');
     }
-
-    get inputFirstName() {return $('//input[@name="first-name"]'); }
-    get inputLastName() {return $('//input[@name="last-name"]'); }
-    get inputEmail() {return $('//input[@name="email"]'); }
-    get checkboxAge18() {return $('//label/input[@name="agree"]'); }
-    get buttonNext() {return $('//button[@class="LDgtd lhpHE onkol K4lLS"]'); }
-
-    // sign up  " Next, we need to know about your business " page 
-
-    get radioIndividual() {return $('//label/span[contains(text(),"Individual/Sole Proprietorship")]'); }
-    get radioCompany() {return $('//label/span[contains(text(),"Company")]'); }
-
-    // business structure of Company legal entity
-
-    get dropdownOption() {return $('//div/input[@name="business-structure"]'); }
-    /**
-      add more elements for Company legal entity and radio buttons
-     */
-
-
-    get radioNonProfitOrg() {return $('//label/span[contains(text(),"Nonprofit organization")]'); }
-
-    // signUp > "Where should we send a text to verify your mobile phone number? " page
-
-    get inputPhoneNumber() {return $('//div/input[@name="phone"]'); }
-
-    // signUp > "Let's create a super secure, super secret password" page
-
-    get inputpassword() {return $('//div/input[@name="new-password"]'); }
-    get inputConfirmPassword() {return $('//div/input[@name="confirm-password"]'); }
-    get buttonCreateAccount() {return $('//span[contains(text(),"Create Account")]'); }
-
 
 }
 

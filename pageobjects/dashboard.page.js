@@ -8,7 +8,9 @@ class DashboardPage extends Page {
      * define selectors using getter methods
      */
     get headerHome() { return $('//span[contains(text(), "Welcome, ")]'); }
-    get buttonAddBalance() { return $('#add-balance-button'); }
+    get goToDashboardButton() { return $('[data-name=go-to-dashboard]'); }
+    get rootAllocationFunds() { return $('strong'); }
+    get buttonAddBalance() { return $('#manage-balance-button'); }
     get buttonAddNew() { return $('#add-new-button'); }
     get addNewOptions() { return $$('div[id=add-new-dropdown] li'); }
 
@@ -20,7 +22,11 @@ class DashboardPage extends Page {
     get buttonAccountSettings() {return $('//a/span[contains (text(), "Account Settings")]'); }
     get buttonMoreFilters() {return $('//span[contains(text(),"More Filters")]'); }
     get inputBoxSearchTransaction() {return $('//div/input[@class="fDzhe"]'); }
-    
+
+    // Landing - Maybe better to be moved to a separate file.
+    get onboardYourEmployeesButton() { return $('[data-name=landing-add-employee]'); }
+    get createAllocationButton() { return $('[data-name=landing-create-allocation]'); }
+    get issueCardButton() { return $('[data-name=landing-issue-card]'); }
 
 
 }

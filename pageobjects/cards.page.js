@@ -12,44 +12,53 @@ class CardsPage extends Page {
     get virtualCards() { return $$('//span[text()="Virtual card"]'); }
     get physicalCards() { return $$('//span[text()="Physical card"]'); }
     get allCards() { return $$('//span[contains(text(), "card")]'); }
-    get successNotification() { return $('//div[text()="Changes successfully saved."]'); }
+    get cardsPerPageDropdown() { return $("[autocomplete=chrome-off]"); }
+    get cardsPerPageOptions() { return $$("li[data-value]"); }
+    get successNotification() { return $('//div/h3[contains(text(), "card created")]'); }
 
 
     /**
     * Method to count Virtual OR Physical cards.
     * @author   Nikita Bogdanov
-    * @param    {String} cardType - either "physical" or "virtual"
     */  
-    async countCards(cardType) {
+    async countCards() {
         let cardCount = 0;
-        await this.paginationNextButton.waitForDisplayed();
-        if(cardType === "physical") {
-            cardCount = await this.physicalCards.length;
-        } else {
-            cardCount = await this.virtualCards.length;
-        }
-
-        while (await this.paginationNextButton.isEnabled() === true) {
-            switch (cardType) {
-                case "physical": {
-                    await this.paginationNextButton.click();
-                    await browser.pause(700);
-                    cardCount += await this.physicalCards.length;
-                    break;
-                }
-                case "virtual": {
-                    await this.paginationNextButton.click();
-                    await browser.pause(700);
-                    cardCount = cardCount + await this.virtualCards.length;
-                    console.log("Count in loop: " + cardCount);
-                    break;
-                }
-                default: {
-                    break;
-                }
+        await this.addNewCardButton.waitForDisplayed();
+        cardCount += await this.allCards.length;
+        if (await this.nextButton.isDisplayed() === true) {
+            while(await this.nextButton.isEnabled() === true) {
+                await this.nextButton.click();
+                cardCount += await this.allCards.length;
             }
         }
-        return cardCount;
+        else { 
+            return cardCount; 
+        }
+        console.log("RETURN: " + cardCount);
+    }
+
+    /**
+    * Method to switch how many cards displayed per page.
+    * @author   Nikita Bogdanov
+    */
+    async cardsPerPage(quanity) {
+        await this.cardsPerPageDropdown.click();
+        await this.cardsPerPageOptions[0].waitForDisplayed();
+        switch(quanity) {
+            case "10":
+                await this.cardsPerPageOptions[0].click();
+                break;
+            case "20":
+                await this.cardsPerPageOptions[1].click();
+                break;
+            case "50":
+                await this.cardsPerPageOptions[2].click();
+                break;
+            case "100":
+                await this.cardsPerPageOptions[3].click();
+                break;
+        }
+        await browser.pause(1500);
     }
 
     open() {

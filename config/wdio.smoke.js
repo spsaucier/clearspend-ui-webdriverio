@@ -1,7 +1,3 @@
-const RerunService = require('wdio-rerun-service');
-const dotenv = require('dotenv');
-dotenv.config();
-
 exports.config = {
     //
     // ====================
@@ -47,46 +43,29 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 3,
+    maxInstances: 10,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        maxInstances: 5,
+    
+        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+        // grid with only 5 firefox instances available you can make sure that not more than
+        // 5 instances get started at a time.
+        maxInstances: 10,
+        //
         browserName: 'chrome',
          'goog:chromeOptions': {
-             args: [
-                 '--headless'
-             ]
+             headless: true
          },
-        browserVersion: 'latest',
-        platformName: 'macOS 12',
-        'sauce:options': {
-          screenResolution: '1440x900',
-          prerun: "storage:filename=uploadFile.sh"
-        },
-    },
-    // {
-    //     maxInstances: 1,
-    //     browserName: 'firefox',
-    //     browserVersion: '96',
-    //     platformName: 'Windows 10',
-    //     'sauce:options': {
-    //       screenResolution: '1920x1200',
-    //     },
-    // },
-    // {
-    //     maxInstances: 1,
-    //     browserName: 'safari',
-    //     browserVersion: '15',
-    //     platformName: 'macOS 12',
-    //     'sauce:options': {
-    //         screenResolution: '1920x1440'
-    //     }
-    // }
-],
+        acceptInsecureCerts: true
+        // If outputDir is provided WebdriverIO can capture driver session logs
+        // it is possible to configure which logTypes to include/exclude.
+        // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
+        // excludeDriverLogs: ['bugreport', 'server'],
+    }],
     //
     // ===================
     // Test Configurations
@@ -112,22 +91,20 @@ exports.config = {
     //
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).
-    bail: 1,
+    bail: 0,
     //
     // Set a base URL in order to shorten url command calls. If your `url` parameter starts
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://capital.qa.clearspend.com/',
-    user: process.env.SAUCE_USERNAME,
-    key: process.env.SAUCE_ACCESS_KEY,
+    baseUrl: 'https://capital.qa.clearspend.com',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 60000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 120000,
+    connectionRetryTimeout: 36000,
     //
     // Default request retries count
     connectionRetryCount: 3,
@@ -136,12 +113,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    region: 'us',
-    services: ['sauce',
-        [RerunService, {
-            rerunDataDir: './results/rerun'
-        }]
-    ],
+    services: ['devtools'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -163,14 +135,20 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
+//     reporters: ['dot', [ 'junit', {
+//         outputDir: './temp',
+//         outputFileFormat: function (options) {
+//             return `results-${options.cid}.xml`;
+//         }
+//     }]
+// ],
     reporters: ['spec'],
-
-
+    // outputDir: 'reports',
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./step-definitions/*.js'],
+        require: ['./step-definitions/*.js',],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -188,7 +166,7 @@ exports.config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 240000,
+        timeout: 600000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
@@ -206,9 +184,8 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    onPrepare: function () {
-        global.cardCount = 0;
-     },
+    // onPrepare: function () {
+    // },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -237,7 +214,7 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
+    // before: function () {
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -324,6 +301,18 @@ exports.config = {
      */
     // after: function (result, capabilities, specs) {
     // },
+    /**
+     * Gets executed once before all workers get launched.
+     */
+    //onPrepare: () => {
+        // Remove the `.tmp/` folder that holds the json and report files
+    //    removeSync('.tmp/');
+    //},
+    /**
+     * Gets executed after all workers got shut down and the process is about to exit.
+     */
+    //onComplete: () => {
+    //}
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {Object} config wdio configuration object
