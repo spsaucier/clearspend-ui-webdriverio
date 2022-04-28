@@ -1,17 +1,19 @@
-image: atlassian/default-image:3
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:16
 
 pipelines:
   default:
     - parallel:
         - step:
-            name: Install
+            name: Build and Test
             caches:
               - node
             script:
               - npm install
-        - step:
-            name: Execute tests
-            caches:
-              - node
-            script:
+              - npm i -g chromedriver
+              - chromedriver
               - npm run smoke
