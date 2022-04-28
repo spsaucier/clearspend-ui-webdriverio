@@ -1,12 +1,14 @@
-image: node:16
-
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm install
-              - npm run smoke
+  custom:
+    customPipelineWithRunnerStep:
+      - step:
+          name: Install Repo
+          runs-on: 
+            - 'self.hosted'
+            - 'macos'
+          script:
+            - npm install
+      - step:
+          name: Execute Tests
+          script:
+            - npm run smoke
