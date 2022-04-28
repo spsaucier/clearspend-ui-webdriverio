@@ -1,38 +1,31 @@
-version: '2'
+image: node:latest
+
+pipelines:
+
+custom: # Pipelines that can only be triggered manually
+
+uiTests:
+
+ - step:
+
+script:
+
+ - apt-get update
+
+ - apt-get install libnspr4 libnss3 libnss3-tools
+
+ - npm install
+
+ - npm run smoke
+
 services:
-    webdriverio:
-        image: huli/webdriverio:latest
-        depends_on:
-            - chrome
-            - firefox
-            - hub
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
-        volumes:
-            - {{replace_with_path_of_wdio.conf.js_file}}:/app
 
-    hub:
-        image: selenium/hub
-        ports:
-            - 4444:4444
+ - selenium-chrome
 
-    firefox:
-        image: selenium/node-firefox
-        ports:
-            - 5900
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
-        depends_on:
-            - hub
+definitions:
 
-    chrome:
-        image: selenium/node-chrome
-        ports:
-            - 5900
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
-        depends_on:
-            - hub
+services:
+
+selenium-chrome:
+
+image: selenium/standalone-chrome
