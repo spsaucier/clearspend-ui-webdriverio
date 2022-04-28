@@ -20,7 +20,7 @@
         "wdio": "^6.0.1",
         "wdio-chromedriver-service": "^7.3.2",
         "wdio-cucumberjs-json-reporter": "^4.1.4",
-        "wdio-rerun-service": "^1.7.3"
+        "wdio-rerun-service": "^1.7.3",
     },
     "scripts": {
         "test": "wdio run config/wdio.conf.js",
