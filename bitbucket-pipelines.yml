@@ -1,10 +1,12 @@
-image: ianwalter/puppeteer
-   
+image: node:16
+
 pipelines:
-  custom:
-    execute-autotests:
-    - step:
-        name: Test Execution
-        script:
-          - npm install
-          - npm run smoke
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm install
+              - npm run smoke
