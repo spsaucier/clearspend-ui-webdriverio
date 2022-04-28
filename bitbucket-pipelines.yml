@@ -1,4 +1,4 @@
-image: node
+image: selenium/node-chrome
    
 pipelines:
   custom:
