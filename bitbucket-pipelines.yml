@@ -9,4 +9,4 @@ pipelines:
               - node
             script:
               - npm install
-              - npm run smoke
+              - npm run test
