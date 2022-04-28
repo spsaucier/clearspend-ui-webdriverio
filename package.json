@@ -6,23 +6,27 @@
         "@faker-js/faker": "^6.0.0-alpha.6",
         "@wdio/cli": "^7.16.12",
         "@wdio/cucumber-framework": "^7.16.12",
-        "@wdio/devtools-service": "^7.16.12",
+        "@wdio/devtools-service": "^7.16.15",
         "@wdio/dot-reporter": "^7.16.14",
         "@wdio/junit-reporter": "^7.16.15",
         "@wdio/local-runner": "^7.16.12",
         "@wdio/sauce-service": "^7.16.12",
+        "@wdio/shared-store-service": "^7.16.16",
         "@wdio/spec-reporter": "^7.16.11",
-        "chromedriver": "^96.0.0",
+        "chromedriver": "^99.0.0",
         "dotenv": "^10.0.0",
         "fs-extra": "^10.0.0",
+        "request": "^2.88.2",
         "wdio": "^6.0.1",
         "wdio-chromedriver-service": "^7.2.2",
-        "wdio-cucumberjs-json-reporter": "^4.1.4"
+        "wdio-cucumberjs-json-reporter": "^4.1.4",
+        "wdio-rerun-service": "^1.7.3"
     },
     "scripts": {
-        "wdio:local": "wdio run config/wdio.conf.js",
-        "wdio:sauce:web": "wdio run config/wdio.sauce.web.js",
-        "wdio:sauce:mobile": "wdio run config/wdio.sauce.mobile.js"
+        "test": "wdio run config/wdio.conf.js",
+        "sauce:web": "wdio run config/wdio.sauce.web.js",
+        "smoke": "wdio run config/wdio.smoke.js",
+        "sauce:mobile": "wdio run config/wdio.sauce.mobile.js"
     },
     "dependencies": {
         "jshint": "^2.13.4",
