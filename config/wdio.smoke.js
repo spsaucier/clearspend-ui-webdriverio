@@ -58,10 +58,13 @@ exports.config = {
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
-            // to run chrome headless the following flags are required
-            // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-            args: ['--headless', '--disable-gpu', '--no-sandbox'],
-            },
+            args: [
+                '--no-sandbox',
+                '--headless',
+                '--disable-gpu',
+                '--window-size=1440,735'
+            ],
+        },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -115,7 +118,11 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['devtools'],
+    services: [["chromedriver", {
+        port: 9515,
+        hostname: "localhost",
+        automationProtocol:"devtools"
+    }],],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
