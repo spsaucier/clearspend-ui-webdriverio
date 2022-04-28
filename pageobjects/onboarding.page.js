@@ -61,25 +61,21 @@ class OnboardingPage extends Page {
     get linkBankButton() { return $('//button//span[text()="Link Bank"]'); }
     get skipBankButton() { return $('//button//span[text()="Skip bank verification"]'); }
 
-    get plaidIframe() { return $('#plaid-link-iframe-1'); }
-
-    get plaidContinueButton() { return $('#aut-continue-button'); }
-    get banksToChooseFrom() { return $$('button.Touchable.InstitutionSearchResult__button.className'); }
-    get plaidUsernameTextbox() { return $('#username'); }
-    get plaidPasswordTextbox() { return $('#password'); }
-    get plaidSubmitButton() { return $('#aut-submit-button'); }
-    get accountsToChooseFrom() { return $$('ul > li > label'); }
-    get plaidtitle() { return $('#a11y-title'); }
-    get continueButton() { return $('#aut-continue-button'); }
+    // Plaid iFrame elements
+    get plaidContinueButton() { return $('#aut-button'); }
+    get banksToChooseFrom() { return $('#aut-ins_3'); }
+    get plaidUsernameTextbox() { return $('#aut-input-0'); }
+    get plaidPasswordTextbox() { return $('#aut-input-1'); }
+    get plaidSubmitButton() { return $('#aut-button'); }
+    get accountsToChooseFrom() { return $$('ul > li.ListItem > div'); }
+    get plaidtitle() { return $('#a11   y-title'); }
+    get continueButton() { return $('#aut-button'); }
     // Plaid END
 
     // Accounts Added + Add Balance
     get amountTextbox() { return $('input[name="amount"]'); }
     get selectAccount() { return $('input ~ div'); }
     get authorizeDepositButton() { return $('button[data-name=authorize-deposit]'); }
-
-    // Plaid 
-    // get continuePlaidButton() { return $('//button//span[text()="Continue"]'); }
 
     // Uploading documents
     get documentsInput() { return $$('input[type=file]'); }
@@ -102,7 +98,6 @@ class OnboardingPage extends Page {
         await browser.keys("ArrowDown");
         await browser.keys("Enter");
 
-        // Street Address fails sometimes...
         await this.streetAddressTextbox.waitForExist();
         await this.streetAddressTextbox.setValue("8849 Latrec" + " ");
         await browser.pause(3000);
@@ -180,7 +175,7 @@ class OnboardingPage extends Page {
     */
     async addDocuments() {
             await this.documentsInput[0].waitForExist();
-            const filePath = path.join("/Users/chef/", 'success.png');
+            const filePath = path.join('/Users/chef/', 'success.png');
             await browser.execute(`document.querySelectorAll("${await this.documentsInput.selector}")[0].style.display = "block"`);
             await this.documentsInput[0].setValue(filePath);
             await browser.execute(`document.querySelectorAll("${await this.documentsInput.selector}")[1].style.display = "block"`);
@@ -199,10 +194,12 @@ class OnboardingPage extends Page {
     async plaidConnect() {
         await this.linkBankButton.waitForDisplayed({ timeout: 30000});
         await this.linkBankButton.click();
+        await browser.pause(3000);
         await browser.switchToFrame(await this.iframe);
+        await this.plaidContinueButton.waitForExist();
         await this.plaidContinueButton.click();
-        await this.banksToChooseFrom[0].waitForDisplayed();
-        await this.banksToChooseFrom[0].click();
+        await this.banksToChooseFrom.waitForDisplayed();
+        await this.banksToChooseFrom.click();
         await this.plaidUsernameTextbox.waitForDisplayed();
         await this.plaidUsernameTextbox.setValue("user_good");
         await this.plaidPasswordTextbox.setValue("pass_good");

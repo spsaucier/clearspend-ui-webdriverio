@@ -3,7 +3,6 @@ import NewEmployeesPage from './new.employee.page';
 
 class NewCardPage extends Page {
 
-    // Selector getters
     get pageHeader() { return $('//h1/span[text()="New Card"]'); }
 
     // Allocation input and employee input. inputOptions is used to select option from Allocation and employee input by index
@@ -53,21 +52,19 @@ class NewCardPage extends Page {
     /**
     * Method to select allocation
     * @author   Nikita Bogdanov
-    * @param    {String} options - allocation options
+    * @param    {String} name - allocation name or leave empty to select root allocation.
     */  
-    async selectAllocation(options) {
-        if (options === "root") {
-            await this.allocationInput.waitForExist();
+    async selectAllocation(name) {
+        await this.allocationInput.waitForExist();
+        if (name === undefined) {
             await this.allocationInput.click();
             await this.inputOptions.waitForDisplayed();
             await this.inputOptions.$$('li')[0].click();
         } else {
-            await this.allocationInput.waitForExist();
-            await this.allocationInput.click();
+            await this.allocationInput.setValue(name);
             await this.inputOptions.waitForDisplayed();
-            await this.inputOptions.$$('li')[1].click();   
+            await this.inputOptions.$$('li')[0].click();
         }
-
     }
 
     /**
@@ -76,14 +73,15 @@ class NewCardPage extends Page {
     * @param    {String} options - allocation options
     */  
     async selectEmployee(type) {
-        await this.employeeInput.waitForDisplayed();
-        await this.employeeInput.click();
+        await this.employeeInput.waitForClickable();
         switch (type) {
             case "owner":
-                await this.inputOptions.waitForDisplayed();
-                await this.inputOptions.$$('li')[0].click();
+                await this.employeeInput.click();
+                await browser.keys("ArrowDown");
+                await browser.keys("Enter");
                 break;
             case "new employee":
+                await this.employeeInput.click();
                 await this.inputOptions.waitForDisplayed();
                 await this.addNewEmployeeButton.waitForDisplayed();
                 await this.addNewEmployeeButton.click();
@@ -93,6 +91,11 @@ class NewCardPage extends Page {
         }
     }
 
+    /**
+    * Method to select employee from dropdown
+    * @author   Nikita Bogdanov
+    * @param    {String} name - Employee Name ex. "John Connor"
+    */  
     async employeeWithName(name) {
         await this.employeeInput.waitForDisplayed();
         await this.employeeInput.click();
@@ -102,6 +105,7 @@ class NewCardPage extends Page {
                 await this.employeesFromDropdown[i].click();
             } else {
                 console.log("Employee with provided name is not found...");
+                break;
             }
         }
     }

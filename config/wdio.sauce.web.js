@@ -1,3 +1,4 @@
+const RerunService = require('wdio-rerun-service');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -46,19 +47,24 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 1,
+    maxInstances: 3,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        maxInstances: 1,
+        maxInstances: 5,
         browserName: 'chrome',
+         'goog:chromeOptions': {
+             args: [
+                 '--headless'
+             ]
+         },
         browserVersion: 'latest',
         platformName: 'macOS 12',
         'sauce:options': {
-          screenResolution: '2048x1536',
+          screenResolution: '1440x900',
           prerun: "storage:filename=uploadFile.sh"
         },
     },
@@ -88,7 +94,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'debug',
+    logLevel: 'info',
     //
     // Set specific log levels per logger
     // loggers:
@@ -106,7 +112,7 @@ exports.config = {
     //
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).
-    bail: 0,
+    bail: 1,
     //
     // Set a base URL in order to shorten url command calls. If your `url` parameter starts
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -130,8 +136,12 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    reggion: 'us',
-    services: ['sauce'],
+    region: 'us',
+    services: ['sauce',
+        [RerunService, {
+            rerunDataDir: './results/rerun'
+        }]
+    ],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -160,10 +170,7 @@ exports.config = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./step-definitions/given.js',
-                  './step-definitions/when.js',
-                  './step-definitions/then.js',
-                 ],
+        require: ['./step-definitions/*.js'],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)

@@ -2,7 +2,6 @@ import Page from './page';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 class LoginPage extends Page {
 
     get inputEmail() { return $('//input[@name="login"]'); }
@@ -10,12 +9,13 @@ class LoginPage extends Page {
     get buttonLogin() { return $('//button[@type="submit"]'); }
     get phoneNumberTextbox() { return $('input[name="phone"]'); }
     get nextButton() { return $('button[type="submit"]'); }
-    get errorNotification() { return $('//h3[text()="Something went wrong"]'); }
+    get errorNotification() { return $('//h3[text()="Could not log in"]'); }
+    get requiredField() { return $("//div[text()='Required field']"); }
 
 
-    async login (email=process.env.EMAIL, password=process.env.PASS) {
+    async login (email, password) {
         await this.inputEmail.setValue(email);
-        await this.inputPassword.setValue(password);
+        await this.inputPassword.setValue(password || process.env.PASS);
         await this.buttonLogin.click();
         await browser.pause(3000);
         await expect(LoginPage.errorNotification).not.toBeDisplayed();
@@ -27,11 +27,8 @@ class LoginPage extends Page {
         await this.nextButton.click();
     }
 
-    async loginWith (email, password=process.env.TEST_PASS) {
-        await this.inputEmail.setValue(email);
-        await this.inputPassword.setValue(password);
-        await this.buttonLogin.click();
-        await browser.pause(3000);
+    async isRequiredFieldTextDisplayed() {
+        await this.requiredField.waitForDisplayed();
     }
 
     open() {

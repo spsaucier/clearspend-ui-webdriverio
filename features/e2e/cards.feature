@@ -6,3 +6,7 @@ Feature: Creating New Virtual Card
     Then I expect to see the dashboard page
     Given I am on the cards page
     Then I expect to see the cards page
+      And I expect to count all cards
+    When I create virtual card
+    Given I am on the cards page
+    Then I expect the "virtual" cards count to be increased by 1
