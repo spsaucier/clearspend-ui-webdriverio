@@ -1,31 +1,12 @@
-image: node:latest
+image: node:16
 
 pipelines:
-
-custom: # Pipelines that can only be triggered manually
-
-uiTests:
-
- - step:
-
-script:
-
- - apt-get update
-
- - apt-get install libnspr4 libnss3 libnss3-tools
-
- - npm install
-
- - npm run smoke
-
-services:
-
- - selenium-chrome
-
-definitions:
-
-services:
-
-selenium-chrome:
-
-image: selenium/standalone-chrome
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm install
+              - npm run smoke
