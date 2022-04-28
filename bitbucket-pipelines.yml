@@ -1,4 +1,4 @@
-image: selenium/node-chrome
+image: markhobson/node-chrome
    
 pipelines:
   custom:
