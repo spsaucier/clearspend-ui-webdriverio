@@ -7,4 +7,4 @@ pipelines:
         name: Test Execution
         script:
           - npm install
-          - npm run wdio:sauce:web
+          - npm run smoke
