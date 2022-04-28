@@ -8,7 +8,4 @@ pipelines:
             - 'macos'
           script:
             - npm install
-      - step:
-          name: Execute Tests
-          script:
             - npm run smoke
