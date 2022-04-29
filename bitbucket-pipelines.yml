@@ -1,9 +1,3 @@
-definitions:
-  services:
-    docker-custom:
-      type: docker 
-      image: yukinying/chrome-headless-browser
-
 pipelines:
   default:
     - step:
