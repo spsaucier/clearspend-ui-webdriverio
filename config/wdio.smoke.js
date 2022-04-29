@@ -61,10 +61,7 @@ exports.config = {
             args: [
                 "--disable-gpu",
                 "--headless",
-                "--disable-dev-shm-usage",
-                "--disable-setuid-sandbox",
                 "--no-sandbox",
-                "--remote-debugging-port=9222"
             ]
         },
         acceptInsecureCerts: true
