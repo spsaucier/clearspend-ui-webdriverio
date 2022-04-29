@@ -2,14 +2,8 @@ image: node
 
 pipelines:
   default:
-    - parallel:
-        - step:
-            name: Login Tests Execution
-            script:
-              - npm install
-              - wdio config/wdio.smoke.js --spec ./features/smoke/login/*.feature
-        - step:
-            name: Sign Up Tests Execution
-            script:
-              - npm install
-              - wdio config/wdio.smoke.js --spec ./features/smoke/sign.up/*.feature
+      - step:
+          name: Login Tests Execution
+          script:
+            - npm install
+            - wdio config/wdio.smoke.js --spec ./features/smoke/login/*.feature
