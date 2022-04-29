@@ -21,7 +21,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/smoke/login/login.with.correct.data.feature',
+        './features/smoke/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
