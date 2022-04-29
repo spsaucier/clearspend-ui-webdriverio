@@ -1,9 +1,15 @@
 pipelines:
-  default:
-    - step:
-        runs-on: 
-          - 'self.hosted'
-          - 'macos'
-        script:
-          - npm i
-          - npm run smoke
+  custom:
+    testRunner:
+      - step:
+          name: Install
+          runs-on: 
+            - 'macos'
+          script:
+            - npm install
+            - npm run smoke
+          caches:
+            - node
+definitions:
+  caches:
+    node: node
