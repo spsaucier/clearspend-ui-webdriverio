@@ -58,7 +58,13 @@ exports.config = {
         //
         browserName: 'chrome',
         'goog:chromeOptions': {
-            headless: true
+            headless: true,
+            args: [
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+            ]
         },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
