@@ -1,11 +1,12 @@
+image: ppiper/node-browsers
+
 pipelines:
-  custom:
-    customPipelineWithRunnerStep:
-      - step:
-          name: Install Repo
-          runs-on: 
-            - 'self.hosted'
-            - 'macos'
-          script:
-            - npm install
-            - npm run smoke
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm install
+              - npm run smoke
