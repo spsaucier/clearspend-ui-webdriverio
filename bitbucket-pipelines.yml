@@ -1,12 +1,16 @@
-image: yukinying/chrome-headless-browser-stable
+definitions:
+  services:
+    docker-custom:
+      type: docker 
+      image: yukinying/chrome-headless-browser
 
 pipelines:
   default:
-    - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm install
-              - npm run smoke
+    - step:
+        runs-on: 
+          - 'self.hosted'
+          - 'macos'
+        script:
+          - npm i
+          - npm run smoke
+>>>>>>> df0ff7a93def94178aa003816c5a19a54cda8f2c
