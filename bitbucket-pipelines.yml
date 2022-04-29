@@ -1,9 +1,6 @@
 pipelines:
   default:
     - step:
-       runs-on:
-         - 'self.hosted'
-         - 'macos'
        name: Install NPM
        script:
           - npm i
