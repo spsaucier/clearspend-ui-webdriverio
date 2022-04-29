@@ -6,10 +6,10 @@ pipelines:
         - step:
             name: Login Tests Execution
             script:
-              - npm i
+              - npm install
               - wdio config/wdio.smoke.js --spec ./features/smoke/login/*.feature
         - step:
             name: Sign Up Tests Execution
             script:
-              - npm i
+              - npm install
               - wdio config/wdio.smoke.js --spec ./features/smoke/sign.up/*.feature
