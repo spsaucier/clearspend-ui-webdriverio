@@ -25,7 +25,7 @@
     "scripts": {
         "test": "wdio run config/wdio.conf.js",
         "sauce:web": "wdio run config/wdio.sauce.web.js",
-        "smoke": "wdio run config/wdio.smoke.js",
+        "smoke": "wdio config/wdio.smoke.js",
         "sauce:mobile": "wdio run config/wdio.sauce.mobile.js"
     },
     "dependencies": {
