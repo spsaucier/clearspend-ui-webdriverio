@@ -7,12 +7,9 @@ pipelines:
             - 'macos'
           script:
             - npm install
+            - npm run smoke
           caches:
             - node
-      - step:
-          name: Execute Tests
-          script:
-            - npm run smoke
 definitions:
   caches:
     node: node
