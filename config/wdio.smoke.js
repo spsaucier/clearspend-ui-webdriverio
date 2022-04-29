@@ -64,7 +64,7 @@ exports.config = {
                 "--disable-dev-shm-usage",
                 "--disable-setuid-sandbox",
                 "--no-sandbox",
-                "--remote-debugging-port=50000:60000"
+                "--remote-debugging-port=9222"
             ]
         },
         acceptInsecureCerts: true
