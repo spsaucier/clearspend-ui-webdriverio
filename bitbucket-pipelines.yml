@@ -13,4 +13,3 @@ pipelines:
         script:
           - npm i
           - npm run smoke
->>>>>>> df0ff7a93def94178aa003816c5a19a54cda8f2c
