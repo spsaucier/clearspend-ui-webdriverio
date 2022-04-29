@@ -1,4 +1,4 @@
-image: ppiper/node-browsers
+image: node
 
 pipelines:
   default:
