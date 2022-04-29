@@ -21,7 +21,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/cards.feature',
+        './features/smoke/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
