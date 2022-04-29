@@ -9,11 +9,5 @@ pipelines:
               - node
             script:
               - npm install
+              - sudo apt install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev
               - npm run smoke
-        - step:
-            name: Code linting
-            script:
-              - npm install eslint
-              - npm run smoke
-            caches:
-              - node
