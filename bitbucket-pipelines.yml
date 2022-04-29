@@ -9,9 +9,6 @@ pipelines:
           - npm i
     - parallel:
         - step:
-            runs-on:
-             - 'selfhosted'
-             - 'macos'
             name: Integration 1
             script:
               - wdio config/wdio.smoke.js
