@@ -9,11 +9,11 @@ pipelines:
               - node
             script:
               - npm install
-              - wdio config/wdio.smoke.js
+              - npm run smoke
         - step:
             name: Code linting
             script:
               - npm install eslint
-              - wdio config/wdio.smoke.js
+              - npm run smoke
             caches:
               - node
