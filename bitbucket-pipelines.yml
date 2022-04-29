@@ -1,9 +1,17 @@
 pipelines:
   default:
     - step:
-        runs-on: 
-          - 'self.hosted'
-          - 'macos'
-        script:
+       runs-on:
+         - 'self.hosted'
+         - 'macos'
+       name: Install NPM
+       script:
           - npm i
-          - npm run smoke
+    - parallel:
+        - step:
+            runs-on:
+             - 'selfhosted'
+             - 'macos'
+            name: Integration 1
+            script:
+              - wdio config/wdio.smoke.js
