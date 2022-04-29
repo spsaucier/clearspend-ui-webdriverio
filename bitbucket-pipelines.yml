@@ -1,13 +1,19 @@
-image: node
+image: node:16
+
 pipelines:
   default:
-    - step:
-        caches:
-          - node
-        script:
-          - npm install
-          - wdio wdio.smoke.js
-
-definitions:
-  caches:
-    node: node
+    - parallel:
+        - step:
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - npm install
+              - wdio config/wdio.smoke.js
+        - step:
+            name: Code linting
+            script:
+              - npm install eslint
+              - wdio config/wdio.smoke.js
+            caches:
+              - node
