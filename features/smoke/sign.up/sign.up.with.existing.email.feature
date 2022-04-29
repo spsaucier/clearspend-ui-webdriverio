@@ -1,7 +1,6 @@
 Feature: Sign Up Functionality
 
-  Scenario: As a user, I should be able to go through sign up process and land on business type page.
+  Scenario: As a user, I should not be able to register with existing email
 	Given I am on the signup page
 		And I sign up to the application with email "nikita.bogdanov@clearspend.com"
-	When I enter confirmation code
-	Then I expect to see the business type page
+	Then I expect to see the notification - already have an account
