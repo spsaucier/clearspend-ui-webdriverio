@@ -1,9 +1,13 @@
 image: node
-
 pipelines:
   default:
-      - step:
-          name: Login Tests Execution
-          script:
-            - npm install
-            - wdio config/wdio.smoke.js --spec ./features/smoke/login/*.feature
+    - step:
+        caches:
+          - node
+        script:
+          - npm install
+          - wdio wdio.smoke.js
+
+definitions:
+  caches:
+    node: node
