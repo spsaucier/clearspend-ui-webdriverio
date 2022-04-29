@@ -1,13 +1,18 @@
-image: node:16
-
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm install
-              - apt-get install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev
-              - npm run smoke
+  custom:
+    testRunner:
+      - step:
+          name: Install
+          runs-on: 
+            - 'macos'
+          script:
+            - npm install
+          caches:
+            - node
+      - step:
+          name: Execute Tests
+          script:
+            - npm run smoke
+definitions:
+  caches:
+    node: node
