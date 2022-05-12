@@ -1,3 +1,5 @@
+const TestData = require('../services/testdata');
+
 exports.config = {
     //
     // ====================
@@ -21,7 +23,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/cards.feature',
+        './features/smoke/login/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
@@ -54,7 +56,7 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        maxInstances: 1,
         //
         browserName: 'chrome',
          'goog:chromeOptions': {
@@ -100,11 +102,11 @@ exports.config = {
     baseUrl: 'https://capital.qa.clearspend.com',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 60000,
+    waitforTimeout: 5000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 36000,
+    connectionRetryTimeout: 5000,
     //
     // Default request retries count
     connectionRetryCount: 3,
@@ -166,7 +168,7 @@ exports.config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 600000,
+        timeout: 15000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
@@ -184,7 +186,7 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function () {
+    // onPrepare: async function (config, capabilities) {
     // },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
@@ -195,7 +197,7 @@ exports.config = {
      * @param  {[type]} args     object that will be merged with the main configuration once worker is initialised
      * @param  {[type]} execArgv list of string arguments passed to the worker process
      */
-    // onWorkerStart: function (cid, caps, specs, args, execArgv) {
+    // onWorkerStart: async function (cid, caps, specs, args, execArgv) {
     // },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -205,8 +207,9 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {String} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
+    beforeSession: async function (config, capabilities, specs, cid) {
+        global.email = await TestData.createBusinessAndOwner();
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -214,7 +217,7 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function () {
+    // before: async function () {
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -230,7 +233,7 @@ exports.config = {
      * @param {String}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // beforeFeature: function (uri, feature) {
+    // beforeFeature: async function (uri, feature) {
     // },
     /**
      *
@@ -304,10 +307,8 @@ exports.config = {
     /**
      * Gets executed once before all workers get launched.
      */
-    //onPrepare: () => {
-        // Remove the `.tmp/` folder that holds the json and report files
-    //    removeSync('.tmp/');
-    //},
+    // onPrepare: async () => {
+    // },
     /**
      * Gets executed after all workers got shut down and the process is about to exit.
      */

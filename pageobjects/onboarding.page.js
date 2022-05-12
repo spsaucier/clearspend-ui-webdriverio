@@ -8,7 +8,7 @@ const ein = faker.datatype.number({ min: 100000000, max: 999999999 });
 const phoneNumber = faker.phone.phoneNumber('321#######');
 let streetAddress = faker.address.streetName();
 const addressNumber = faker.datatype.number({min: 1000, max: 9999});
-const title = faker.name.title();
+const title = faker.name.jobTitle();
 const ssn = faker.finance.routingNumber();
 
 
