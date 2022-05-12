@@ -1,3 +1,4 @@
+import TestData from "../services/testdata";
 /**
 * main page object containing all methods, selectors and functionality
 * that is shared across all page objects
@@ -9,6 +10,10 @@ export default class Page {
     */
     // Onboarding Steps
     get nextButton() { return $('//button//span[text()="Next"]'); }
+
+    async generateTestData() {
+        global.email = await TestData.createBusinessAndOwner();
+    }
 
     open(path) {
         return browser.url(`/${path}`);

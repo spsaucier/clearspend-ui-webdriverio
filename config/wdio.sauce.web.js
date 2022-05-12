@@ -1,4 +1,3 @@
-const RerunService = require('wdio-rerun-service');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -47,20 +46,20 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 3,
+    maxInstances: 10,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        maxInstances: 5,
+        maxInstances: 10,
         browserName: 'chrome',
-         'goog:chromeOptions': {
-             args: [
-                 '--headless'
-             ]
-         },
+        //  'goog:chromeOptions': {
+        //      args: [
+        //          '--headless'
+        //      ]
+        //  },
         browserVersion: 'latest',
         platformName: 'macOS 12',
         'sauce:options': {
@@ -112,7 +111,7 @@ exports.config = {
     //
     // If you only want to run your tests until a specific amount of tests have failed use
     // bail (default is 0 - don't bail, run all tests).
-    bail: 1,
+    bail: 0,
     //
     // Set a base URL in order to shorten url command calls. If your `url` parameter starts
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.

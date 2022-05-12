@@ -1,3 +1,5 @@
+const TestData = require("../services/testdata");
+
 exports.config = {
     //
     // ====================
@@ -104,11 +106,11 @@ exports.config = {
     baseUrl: 'https://capital.qa.clearspend.com',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 60000,
+    waitforTimeout: 10000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 36000,
+    connectionRetryTimeout: 3000,
     //
     // Default request retries count
     connectionRetryCount: 3,
@@ -170,7 +172,7 @@ exports.config = {
         // <string> (expression) only execute the features or scenarios with tags matching the expression
         tagExpression: '',
         // <number> timeout for step definitions
-        timeout: 600000,
+        timeout: 10000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
@@ -209,8 +211,8 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {String} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
-    // },
+    beforeSession: function (config, capabilities, specs, cid) {
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.

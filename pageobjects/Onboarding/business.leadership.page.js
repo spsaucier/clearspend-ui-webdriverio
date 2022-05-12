@@ -23,7 +23,7 @@ class BusinessLeadership extends Page {
 
     async enterTitle() {
         await this.titleTextbox.waitForDisplayed();
-        await this.titleTextbox.setValue(faker.name.title());
+        await this.titleTextbox.setValue(faker.name.jobTitle());
     }
 
     async pickDate() {
