@@ -1,3 +1,4 @@
+const TestData = require('../services/testdata');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -24,7 +25,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/*.feature',
+        './features/**/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
@@ -46,20 +47,15 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 3,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        maxInstances: 10,
+        maxInstances: 1,
         browserName: 'chrome',
-        //  'goog:chromeOptions': {
-        //      args: [
-        //          '--headless'
-        //      ]
-        //  },
         browserVersion: 'latest',
         platformName: 'macOS 12',
         'sauce:options': {
@@ -126,7 +122,7 @@ exports.config = {
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 120000,
+    connectionRetryTimeout: 15000,
     //
     // Default request retries count
     connectionRetryCount: 3,
@@ -136,11 +132,7 @@ exports.config = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     region: 'us',
-    services: ['sauce',
-        [RerunService, {
-            rerunDataDir: './results/rerun'
-        }]
-    ],
+    services: ['sauce'],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -205,9 +197,8 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    onPrepare: function () {
-        global.cardCount = 0;
-     },
+    // onPrepare: function () {
+    //  },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -217,7 +208,8 @@ exports.config = {
      * @param  {[type]} args     object that will be merged with the main configuration once worker is initialised
      * @param  {[type]} execArgv list of string arguments passed to the worker process
      */
-    // onWorkerStart: function (cid, caps, specs, args, execArgv) {
+    // onWorkerStart: async function (cid, caps, specs, args, execArgv) {
+    //     global.email = await TestData.createBusinessAndOwner();
     // },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -227,7 +219,8 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      * @param {String} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs, cid) {
+    // beforeSession: async function (config, capabilities, specs, cid) {
+    //     global.email = await TestData.createBusinessAndOwner();
     // },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
@@ -236,8 +229,9 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: function (capabilities, specs) {
-    // },
+    before: async function (capabilities, specs) {
+        global.email = await TestData.createBusinessAndOwner();
+    },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name

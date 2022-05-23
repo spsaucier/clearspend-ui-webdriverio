@@ -156,6 +156,7 @@ async function generateLinkToken() {
         });
         linkToken = resp.data.linkToken;
         console.log('\x1b[32m%s\x1b[0m', "New linkToken is generated: " + "<<< " + linkToken + " >>>");
+        console.log(linkToken);
     } catch (error) {
         console.error(error);
     }
