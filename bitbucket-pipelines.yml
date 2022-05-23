@@ -1,15 +1,11 @@
+image: node:16
+
 pipelines:
-  custom:
-    testRunner:
+  default:
       - step:
-          name: Install
-          runs-on: 
-            - 'macos'
-          script:
-            - npm install
-            - npm run smoke
+          name: Build and Test
           caches:
             - node
-definitions:
-  caches:
-    node: node
+          script:
+            - npm install
+            - npm run sauce:web
