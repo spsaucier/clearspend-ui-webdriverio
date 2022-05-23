@@ -43,7 +43,7 @@ const userCredentials = {
 
 const businessProspectCompanyDetails = {
     legalName: faker.company.companyName(),
-    employerIdentificationNumber: faker.random.numeric(9),
+    employerIdentificationNumber: faker.datatype.number({ min: 100000000, max: 999999999 }),
     businessPhone: "+13213474518",
     address: {
       streetLine1: "8849 Latrec Ave",
