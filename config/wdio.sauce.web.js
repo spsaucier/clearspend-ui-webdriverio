@@ -60,7 +60,7 @@ exports.config = {
         platformName: 'macOS 12',
         'sauce:options': {
           screenResolution: '1440x900',
-          //prerun: "storage:filename=uploadFile.sh"
+          // prerun: "storage:filename=uploadFile.sh"
         },
     },
     // {
