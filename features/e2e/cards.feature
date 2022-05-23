@@ -9,4 +9,3 @@ Feature: Creating New Virtual Card
       And I expect to count all cards
     When I create virtual card
     Given I am on the cards page
-    Then I expect the "virtual" cards count to be increased by 1
