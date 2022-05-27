@@ -25,7 +25,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/e2e/new.physical.cards.feature',
+        './features/smoke/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
