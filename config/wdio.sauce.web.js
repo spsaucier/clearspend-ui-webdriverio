@@ -122,7 +122,7 @@ exports.config = {
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
-    connectionRetryTimeout: 120000,
+    connectionRetryTimeout: 240000,
     //
     // Default request retries count
     connectionRetryCount: 3,
