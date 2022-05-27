@@ -1,6 +1,6 @@
 const axios = require("axios");
 const config = require('./config');
-const expect = require('chai').expect;
+// const expect = require('chai').expect;
 
 // Assign baseURL value
 axios.defaults.baseURL = 'https://api.capital.qa.clearspend.com';
@@ -16,9 +16,9 @@ async function createBusinessProspect() {
     try {
         const resp = await axios.post('/business-prospects', config.businessProspect);
         businessProspectId = resp.data.businessProspectId;
-        expect(resp.status).to.equal(200);
-        expect(resp.statusText).to.equal('OK');
-        expect(resp.data).to.have.property('businessProspectId');
+        // expect(resp.status).to.equal(200);
+        // expect(resp.statusText).to.equal('OK');
+        // expect(resp.data).to.have.property('businessProspectId');
         console.log('\x1b[32m%s\x1b[0m', "New Business Prospect ID: " + "<<< " + businessProspectId + " >>>");
     } catch (error) {
         console.error(error);

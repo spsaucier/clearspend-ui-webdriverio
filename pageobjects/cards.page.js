@@ -11,8 +11,8 @@ class CardsPage extends Page {
     get paginationNextButton() { return $('button[data-name="Next page"]'); }
     get virtualCards() { return $$('//span[text()="Virtual card"]'); }
     get physicalCards() { return $$('//span[text()="Physical card"]'); }
-    get allCards() { return $$('//span[contains(text(), "card")]'); }
-    get cardsPerPageDropdown() { return $("[autocomplete=chrome-off]"); }
+    get allCards() { return $$('//span[contains(text(), "al card")]'); }
+    get cardsPerPageDropdown() { return $$("[autocomplete=chrome-off]"); }
     get cardsPerPageOptions() { return $$("li[data-value]"); }
     get successNotification() { return $('//div/h3[contains(text(), "card created")]'); }
 
@@ -20,31 +20,22 @@ class CardsPage extends Page {
     /**
     * Method to count Virtual OR Physical cards.
     * @author   Nikita Bogdanov
-    */  
+    */
     async countCards() {
         let cardCount = 0;
         await this.addNewCardButton.waitForDisplayed();
         cardCount += await this.allCards.length;
-        if (await this.nextButton.isDisplayed() === true) {
-            while(await this.nextButton.isEnabled() === true) {
-                await this.nextButton.click();
-                cardCount += await this.allCards.length;
-            }
-        }
-        else { 
-            return cardCount; 
-        }
-        console.log("RETURN: " + cardCount);
+        return cardCount;
     }
 
     /**
-    * Method to switch how many cards displayed per page.
+    * Method to switch how many cards displayed per page.- Not used as of now, can be used in case of using an old account
     * @author   Nikita Bogdanov
     */
     async cardsPerPage(quanity) {
-        await this.cardsPerPageDropdown.click();
+        await this.cardsPerPageDropdown[0].click();
         await this.cardsPerPageOptions[0].waitForDisplayed();
-        switch(quanity) {
+        switch (quanity) {
             case "10":
                 await this.cardsPerPageOptions[0].click();
                 break;

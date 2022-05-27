@@ -16,10 +16,10 @@ class NewCardPage extends Page {
 
     // Checkboxes - Virtual Card and Physical Card checkboxes.
     get virtualCardCheckbox() { return $('input[name=card-type_VIRTUAL]'); }
-    get physicalCardCheckbox() { return $('//span[text()="Physical card"]'); }
+    get physicalCardCheckbox() { return $('input[name=card-type_PHYSICAL]'); }
 
     // Used for Physical Cards only
-    get deliveryAddressCheckbox() { return $('(//label//span[text()="Business"])[1]'); }
+    get deliveryAddressCheckbox() { return $$('[data-name=delivery-address-type]'); }
 
     // Checkbox to show/not show employee name
     get showEmployeeNameCheckbox() { return $('//input[@name="name-on-card"]'); }
@@ -121,7 +121,7 @@ class NewCardPage extends Page {
             await browser.execute(`document.querySelector("${await this.virtualCardCheckbox.selector}").click()`);
         } else {
             await browser.execute(`document.querySelector("${await this.physicalCardCheckbox.selector}").click()`);
-            await browser.execute(`document.querySelector("${await this.deliveryAddressCheckbox.selector}").click()`);
+            await browser.execute(`document.querySelectorAll("${await this.deliveryAddressCheckbox.selector}")[0].click()`);
         }
     }
 

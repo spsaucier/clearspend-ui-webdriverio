@@ -68,7 +68,7 @@ const businessOwnerDetails = {
     percentageOwnership: 100,
     title: "CEO",
     dateOfBirth: "1990-01-01",
-    taxIdentificationNumber: faker.random.numeric(9),
+    taxIdentificationNumber: faker.datatype.number({ min: 100000000, max: 999999999 }),
     email: email,
     phone: "+13213474518",
     address: {

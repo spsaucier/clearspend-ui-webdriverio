@@ -13,7 +13,7 @@ When(/^I create (virtual|physical|both) card for the "([^"]*)"$/, async (cardTyp
     await NewCardPage.cardType(cardType);
     await expect(NewCardPage.createCardButton).toBeEnabled();
     await NewCardPage.createCardButton.click();
-    await expect(CardsPage.successNotification).toBeDisplayed();
+    // await expect(CardsPage.successNotification).toBeDisplayed();
     await CardsPage.open();
 });
 
@@ -28,7 +28,8 @@ When(/^I create (virtual|physical) card for the owner$/, async (cardType) => {
     await NewCardPage.cardType(cardType);
     await expect(NewCardPage.createCardButton).toBeEnabled();
     await NewCardPage.createCardButton.click();
-    await expect(CardsPage.successNotification).toBeDisplayed();
+    // await expect(CardsPage.successNotification).toBeDisplayed();
+    await CardsPage.open();
 });
 
 // Add new virtual or physical card with/without transaction categories and/or daily/monthly/transaction limit and/or payment types pos/online/manual entry.
@@ -47,17 +48,16 @@ When(/^I create (virtual|physical) card(?: with the categories "([^"]*)")?(?: wi
     await expect(CardsPage.successNotification).toBeDisplayed();
 });
 
-// ADD ONE
+// Change cards per page view.
 When("I change to {string} cards per page", async (quantity) => {
-    await CardsPage.cardsPerPageDropdown.waitForExist();
-    await expect(CardsPage.cardsPerPageDropdown).toBeExisting();
+    await CardsPage.cardsPerPageDropdown[0].waitForExist();
+    await expect(CardsPage.cardsPerPageDropdown[0]).toBeExisting();
     await CardsPage.cardsPerPage(quantity);
     await expect(CardsPage.cardsPerPageDropdown).toHaveValue(quantity + " / page");
 });
 
-// Counting all the physical or virtual cards.
+// Counting all cards. both physical and virtual
 Then("I expect to count all cards", async () => {
-    await CardsPage.cardsPerPage("100");
     global.cardCount = await CardsPage.countCards();
     console.log("RETURN: " + global.cardCount);
 });

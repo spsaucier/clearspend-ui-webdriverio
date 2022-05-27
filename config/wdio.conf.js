@@ -23,7 +23,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/e2e/*.feature',
+        './features/smoke/**/*.feature',
     ],
     // Patterns to exclude.
     exclude: [
@@ -59,9 +59,9 @@ exports.config = {
         maxInstances: 1,
         //
         browserName: 'chrome',
-         'goog:chromeOptions': {
-             headless: true
-         },
+          'goog:chromeOptions': {
+              headless: true
+          },
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -233,8 +233,9 @@ exports.config = {
      * @param {String}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // beforeFeature: async function (uri, feature) {
-    // },
+     beforeFeature: async function (uri, feature) {
+        global.cardCount = "0";
+     },
     /**
      *
      * Runs before a Cucumber Scenario.

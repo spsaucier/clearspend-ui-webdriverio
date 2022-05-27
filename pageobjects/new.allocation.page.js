@@ -12,8 +12,13 @@ class NewAllocationPage extends Page {
     get inputAmount() { return $('//input[@name="amount"]'); }
     get inputAllocationOwner() { return $('//input[@name="employee"]'); }
     get buttonCreateAllocation() { return $('//button//span[text()="Create Allocation"]'); }
+    get successNotification() { return $('svg ~ div h3')}
+    get closeNotification() { return $('svg ~ div ~ button')}
 
     async createAllocation(allocationName) {
+        if (await this.successNotification.isDisplayed() === false) return;
+        await this.closeNotification.click();
+        await AllocationsPage.buttonNewAllocation.waitForExist();
         await AllocationsPage.buttonNewAllocation.click();
         await this.inputParentAllocation.click();
         await browser.keys("ArrowDown");

@@ -2,14 +2,9 @@ import { Given, When, Then } from '@wdio/cucumber-framework';
 import LoginPage from '../pageobjects/login.page';
 import DashboardPage from '../pageobjects/dashboard.page';
 
-// Generating Test Data
-Given(/^I generate test data$/, async () => {
-    await LoginPage.generateTestData();
-});
-
 // Login with the user
-Given(/^I sign in to the application$/, async () => {
-    await LoginPage.login(global.email);
+Given(/^I sign in to the application(?: with email "([^"]*)")?$/, async (email) => {
+    await LoginPage.login(email);
 });
 
 // 2FA Step

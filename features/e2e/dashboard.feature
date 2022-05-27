@@ -3,6 +3,7 @@ Feature: Dashboard elements functionalities
   Scenario: As a user, I should be able to have access to filter trancestions
     Given I am on the login page
         And I sign in to the application
+        And I bypass the two factor authentication
         And I expect to see the dashboard page
     When I navigate and select filter button
         And choose filter options from right bar    
@@ -11,6 +12,7 @@ Feature: Dashboard elements functionalities
   Scenario: As a user, I should be able to have access to all elements on left bar
     Given I am on the login page
         And I sign in to the application
+        And I bypass the two factor authentication
         And I expect to see the dashboard page
     When I click on allocation button
     Then I expect to see allocaton page appeared
@@ -28,6 +30,7 @@ Feature: Dashboard elements functionalities
   Scenario: As a user, I should be able to get transactions from search transactions input box
     Given I am in the login page 
         And I sign in to the application
+        And I bypass the two factor authentication
     Then I expect to see the dashboard page
     When I navigate and click on Search transactions input
         And I input the transaction amout 
@@ -42,6 +45,7 @@ Feature: Dashboard elements functionalities
   Scenario: As a user, I should be able to do outbound transfer
     Given I am in the login page 
         And I sign in to the application
+        And I bypass the two factor authentication
         And I expect to see the dashboard page
     When I navigate and click on Manage balance button
     Then I expect to see the add balance by default selected
