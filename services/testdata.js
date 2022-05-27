@@ -235,7 +235,7 @@ async function completeOnboarding() {
                 Cookie: cookie
             }
         });
-        console.log('\x1b[33m%s\x1b[0m', "Onboarding is completed");
+        console.log('\x1b[33m%s\x1b[0m', "onboarding is completed");
         console.log('\x1b[32m%s\x1b[0m', "New Account is generated: " + "<<< " + config.businessProspect.email + " / password123 >>>");
     } catch (error) {
         console.error(error);

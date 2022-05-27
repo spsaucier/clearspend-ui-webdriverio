@@ -107,7 +107,7 @@ Then(/^I expect to see the authorize deposit page$/, async () => {
     expect(AuthorizeDepositPage.authorizeDepositButton).toBeExisting();
 });
 
-// Validate the Onboarding page is opened - NOTE: To be deprecated
+// Validate the onboarding page is opened - NOTE: To be deprecated
 Then(/^I expect to see the onboarding page$/, async () => {
     await expect(OnboardingPage.entityNameTextbox).toBeDisplayed();
     await expect(OnboardingPage.einTextbox).toBeDisplayed();
