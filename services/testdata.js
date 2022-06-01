@@ -10,6 +10,7 @@ let cookie;
 let businessBankAccountId;
 let linkToken;
 let publicToken;
+let userId;
 
 // Send Request to create new business prospect
 async function createBusinessProspect() {
@@ -242,6 +243,33 @@ async function completeOnboarding() {
     }
 }
 
+// Find User by Email
+async function searchUserByEmail() {
+    try {
+        const resp = await axios.get(`https://fa.capital.qa.clearspend.com/api/user/search?queryString=${config.businessProspect.email}`, {
+            headers: {
+                Authorization: "8bpuUJpOO6007COwrsxg1nThJG3EtDqWyoXOIDHANCzG9ykEeMTZaPGa"
+            }
+        });
+        userId = resp.data.users[0].id;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Delete user from Fusion Auth by UserID
+async function deleteUserByUserId() {
+    try {
+        const resp = await axios.delete(`https://fa.capital.qa.clearspend.com/api/user/${userId}?hardDelete=true`, {
+            headers: {
+                Authorization: "8bpuUJpOO6007COwrsxg1nThJG3EtDqWyoXOIDHANCzG9ykEeMTZaPGa"
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 // Combine all the requests and return new user
 async function createBusinessAndOwner() {
     await createBusinessProspect();
@@ -262,6 +290,12 @@ async function createBusinessAndOwner() {
     return config.businessProspect.email;
 }
 
+async function deleteUser() {
+    await searchUserByEmail();
+    await deleteUserByUserId();
+}
+
 module.exports = {
-    createBusinessAndOwner
+    createBusinessAndOwner,
+    deleteUser
 };

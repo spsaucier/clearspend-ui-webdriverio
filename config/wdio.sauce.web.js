@@ -296,8 +296,9 @@ exports.config = {
      * @param {String}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // afterFeature: function (uri, feature) {
-    // },
+    afterFeature: async function (uri, feature) {
+        await TestData.deleteUser();
+    },
     
     /**
      * Runs after a WebdriverIO command gets executed
