@@ -55,8 +55,9 @@ const businessProspectCompanyDetails = {
     },
     mcc: "5462",
     description: "Business small description",
+    timeZone: "US_EASTERN",
     businessName: "business",
-    url: "https://fecebook.com/business"
+    url: "https://facebook.com/business"
   };
 
 const businessOwnerDetails = {

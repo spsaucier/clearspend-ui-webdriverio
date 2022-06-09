@@ -3,8 +3,18 @@ import LoginPage from '../pageobjects/login.page';
 import DashboardPage from '../pageobjects/dashboard.page';
 
 // Login with the user
-Given(/^I sign in to the application(?: with email "([^"]*)")?$/, async (email) => {
-    await LoginPage.login(email);
+Given(/^I sign in to the application$/, async () => {
+    await LoginPage.login(global.email);
+});
+
+// Login with the user
+// Given(/^I sign in to the application(?: with email "([^"]*)")?$/, async (email) => {
+//     await LoginPage.login(email);
+// });
+
+// Login with the user
+Given(/^I sign in to the application with password "([^"]*)"$/, async (password) => {
+    await LoginPage.login(global.email, password);
 });
 
 // 2FA Step
