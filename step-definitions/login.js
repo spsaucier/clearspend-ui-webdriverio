@@ -8,9 +8,9 @@ Given(/^I sign in to the application$/, async () => {
 });
 
 // Login with the user
-// Given(/^I sign in to the application(?: with email "([^"]*)")?$/, async (email) => {
-//     await LoginPage.login(email);
-// });
+Given(/^I sign in to the application with email "([^"]*)"$/, async (email) => {
+    await LoginPage.login(email);
+});
 
 // Login with the user
 Given(/^I sign in to the application with password "([^"]*)"$/, async (password) => {
